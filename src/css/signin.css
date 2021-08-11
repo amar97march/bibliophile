@@ -1,0 +1,14 @@
+.SigninOutcontainer{
+    display: flex;
+  /* margin-top: 0px; */
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+  background: url('https://www.blurb.com/blog/wp-content/uploads/2019/07/2019_Blog_Header_comics9steps_blog_v01ap.jpg') fixed no-repeat;
+  background-size: cover;
+}
+
+.MuiFormHelperText-root{
+    color: red !important;
+}
