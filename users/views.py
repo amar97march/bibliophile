@@ -78,19 +78,24 @@ class VerifyOtp(APIView):
         try:
             data = request.data
             user_obj = User.objects.filter(email = data.get('email'))
+            print("hello1")
             if not user_obj.exists():
                 return Response({"status":404, "error":"non user found"}, status= status.HTTP_404_NOT_FOUND)
             user_obj =user_obj.first()
+            print("hello2")
             otp_status, time = send_otp_to_mobile(user_obj.phone,user_obj)
             if not otp_status:
                 return Response({"status":403,"error":f"Try again after {time} seconds"}, status = status.HTTP_403_FORBIDDEN)
             email_token = uuid.uuid4()
+            print("hello3")
             subject = "Your email needs to be verifed"
             message =  f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://bibliophile-react-django.herokuapp.com/users/email_verification/{user_obj.email}/{email_token}/"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user_obj.email]
+            print("hello4")
             send_mail(subject, message, email_from,recipient_list)
             user_obj.email_token = email_token
+            print("hello5")
             user_obj.save()
             return Response({"status":200, "message":"new otp sent"})
             
