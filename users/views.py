@@ -84,6 +84,7 @@ class VerifyOtp(APIView):
             user_obj =user_obj.first()
             print("hello2")
             otp_status, time = send_otp_to_mobile(user_obj.phone,user_obj)
+            print("kkkkkk")
             if not otp_status:
                 return Response({"status":403,"error":f"Try again after {time} seconds"}, status = status.HTTP_403_FORBIDDEN)
             email_token = uuid.uuid4()
