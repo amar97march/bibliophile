@@ -36,8 +36,8 @@ const Login = ({ handleChange }) => {
         })
         .catch((err) => {
           console.log(err);
+          props.setFieldError("email", "Invalid Credentials");
           props.setSubmitting(false)
-          alert("Invalid Credentials")
         });
 
         

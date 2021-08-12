@@ -2,6 +2,7 @@ from rest_framework.response import Response
 from .models import *
 from .serializers import *
 import uuid
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
@@ -21,7 +22,7 @@ class RegisterView(APIView):
                 return Response({
                     'status': 403,
                     'errors': serializer.errors
-                })
+                }, status = status.HTTP_403_FORBIDDEN)
             serializer.save()            
             return Response({'status':200, 'message': 'An email OTP sent on your number and email'})
         except Exception as e:
