@@ -1,6 +1,7 @@
 import React from "react";
 // import { useHistory } from 'react-router-dom';
 import "../css/signin.css";
+import { useHistory } from "react-router-dom";
 import {
   Grid,
   Paper,
@@ -29,7 +30,9 @@ const Signup = () => {
     margin: "0px auto",
   };
   const avatarStyle = { backgroundColor: "green" };
-  const marginTop = { marginTop: 15 };
+//   const marginTop = { marginTop: 15 };
+
+  let history = useHistory();
 
   const initialValues = {
     firstName: "",
@@ -71,12 +74,10 @@ const Signup = () => {
     console.log(payload);
     signup(payload)
       .then((res) => {
-        //   saveTokenToLocalstorage(res.data.token);
-        //   setSuccess(true);
         console.log(res);
         props.resetForm();
         props.setSubmitting(false);
-        alert("Register successful");
+        history.push("/verify_email_otp/", {email: values["email"]});
       })
       .catch((err) => {
         console.log(err.response.data);

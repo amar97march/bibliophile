@@ -40,7 +40,7 @@ def send_email_token(sender, instance, created, ** kwargs):
         try:
             email_token = uuid.uuid4()
             subject = "Your email needs to be verifed"
-            message =  f"Hi, click on the link to verify email http://127.0.0.1:8000/users/email_verification/{instance.email}/{email_token}/"
+            message =  f"Hi, click on the link to verify email https://bibliophile-react-django.herokuapp.com/users/email_verification/{instance.email}/{email_token}/"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [instance.email]
             send_mail(subject, message, email_from,recipient_list)

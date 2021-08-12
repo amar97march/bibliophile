@@ -58,7 +58,7 @@ class VerifyOtp(APIView):
         try:
             data = request.data
 
-            user_obj = User.objects.get(phone = data.get('phone'))
+            user_obj = User.objects.get(email = data.get('email'))
             otp = data.get('otp')
 
             if user_obj.otp == otp:
@@ -68,31 +68,32 @@ class VerifyOtp(APIView):
                 return Response({"status":200, "message":"your OTP is verified", 'refresh': str(refresh),
         'access': str(refresh.access_token),})
 
-            return Response({"status":403,"message":"your otp is wrong"})
+            return Response({"status":403,"message":"your otp is wrong"}, status = status.HTTP_403_FORBIDDEN)
 
         except Exception as e:
             print(e)
-        return Response({"status":404, "error":"something went wrong"})
+        return Response({"status":404, "error":"something went wrong"}, status = status.HTTP_403_FORBIDDEN)
 
     def patch(self, request):
         try:
             data = request.data
-            user_obj = User.objects.filter(phone = data.get('phone'))
+            user_obj = User.objects.filter(email = data.get('email'))
             if not user_obj.exists():
-                return Response({"status":404, "error":"non user found"})
+                return Response({"status":404, "error":"non user found"}, status= status.HTTP_404_NOT_FOUND)
             user_obj =user_obj.first()
-            status, time = send_otp_to_mobile(data.get('phone'),user_obj)
+            otp_status, time = send_otp_to_mobile(user_obj.phone,user_obj)
+            if not otp_status:
+                return Response({"status":403,"error":f"Try again after {time} seconds"}, status = status.HTTP_403_FORBIDDEN)
             email_token = uuid.uuid4()
             subject = "Your email needs to be verifed"
-            message =  f"Hi, click on the link to verify email http://127.0.0.1:8000/users/email_verification/{user_obj.email}/{email_token}/"
+            message =  f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://bibliophile-react-django.herokuapp.com/users/email_verification/{user_obj.email}/{email_token}/"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user_obj.email]
             send_mail(subject, message, email_from,recipient_list)
             user_obj.email_token = email_token
             user_obj.save()
-            if status:
-                return Response({"status":200, "message":"new otp sent"})
-            return Response({"status":404,"error":f"try after {time} seconds"})
+            return Response({"status":200, "message":"new otp sent"})
+            
         except Exception as e:
             print(e)
 
@@ -111,33 +112,33 @@ class EmailVerification(APIView):
     authentication_classes = []
     permission_classes = [AllowAny]
 
-    def post(self, request, email,email_token):
+    def post(self, request):
         try:
             data = request.data
 
-            user_obj = User.objects.get(email = email)
+            user_obj = User.objects.get(email = request.data.get("email"))
 
-            if user_obj.email_token == email_token:
+            if user_obj.email_token == request.data.get("email_token"):
                 user_obj.is_phone_verified = True
                 user_obj.save()
                 refresh = RefreshToken.for_user(user_obj)
                 return Response({"status":200, "message":"your OTP is verified", 'refresh': str(refresh),
         'access': str(refresh.access_token),})
 
-            return Response({"status":403,"message":"your otp is wrong"})
+            return Response({"status":403,"message":"your token is wrong"}, status = status.HTTP_403_FORBIDDEN)
 
         except Exception as e:
             print(e)
-        return Response({"status":404, "error":"something went wrong"})
+        return Response({"status":404, "error":"something went wrong"}, status= status.HTTP_404_NOT_FOUND)
 
 
 class ResetPasswordEmailOTP(APIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAuthenticated]
+    authentication_classes = []
+    permission_classes = [AllowAny]
 
     def post(self, request):
         try:
-            user_data = User.objects.get(id = request.user.id)
+            user_data = User.objects.get(email = request.data.get("email"))
             if cache.get(f"RESET-{user_data.email}"):
                 return Response({"status":403,  "error":f"Please retry after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
             otp_to_sent = random.randint(1000,9999)
@@ -156,12 +157,12 @@ class ResetPasswordEmailOTP(APIView):
 
     def patch(self, request):
         try:
-            user_data = User.objects.get(id = request.user.id)
+            user_data = User.objects.get(email = request.data.get("email"))
             data = request.data
-            new_password = data.get("new_password","")
+            new_password = data.get("newPassword","")
             if not new_password or len(new_password) < 8:
-                return Response({"status":403, "error":"password must be greater than 8 characters"})
-            otp = data.get("otp")
+                return Response({"status":403, "error":"password must be greater than 8 characters"},status = status.HTTP_403_FORBIDDEN)
+            otp = int(data.get("otp"))
             if int(user_data.otp) == otp:
                 user_data.set_password(new_password)
                 user_data.save()
@@ -169,7 +170,7 @@ class ResetPasswordEmailOTP(APIView):
             
         except Exception as e:
             print(e)
-        return Response({"status":404, "error":"something went wrong"})
+        return Response({"status":404, "error":"something went wrong"}, status = status.HTTP_403_FORBIDDEN)
 
 
 class FriendRequest(APIView):

@@ -9,7 +9,7 @@ import Signup from '../Components/signup';
 import '../css/signin.css'
 
 
-const SignInOutContainer = () => {
+const LoginRegisterContainer = () => {
     const [value, setValue] = useState(0)
 
     const handleChange = (event, newValue) => {
@@ -41,8 +41,6 @@ const SignInOutContainer = () => {
 
 
     return (
-        <div className = "SigninOutcontainer">
-            <h1>Bibliophile</h1>
         <Paper elevation = {20} style = {paperStyle}>
             <Tabs
                 value={value}
@@ -61,8 +59,8 @@ const SignInOutContainer = () => {
                 <Signup />
             </TabPanel>
         </Paper>
-        </div>
+
     )
 }
 
-export default SignInOutContainer
+export default LoginRegisterContainer

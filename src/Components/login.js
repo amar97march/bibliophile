@@ -66,7 +66,7 @@ const Login = ({ handleChange }) => {
                             <Button style={btstyle} type="submit" variant="contained" disabled = {props.isSubmitting} fullWidth color="primary">{props.isSubmitting?"Loading":"Sign In"}</Button>
 
                             <Typography>
-                                <Link href="#" >Forgot Password</Link>
+                                <Link href="/forget_password/" >Forgot Password</Link>
 
                             </Typography>
                             <Typography> Do You have an account?
