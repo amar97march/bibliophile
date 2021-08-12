@@ -52,3 +52,10 @@ export const verifyEmailAPI = (payload) => {
   });
 };
 
+
+export const SearchBook = (keyword, page) => {
+  return Axios({
+    method: "get",
+    url: `https://www.googleapis.com/books/v1/volumes?q=intitle:${keyword}&startIndex=${(page-1)*10}`
+  });
+};

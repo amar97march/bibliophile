@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import "../css/signin.css";
+import "../../css/signin.css";
 import {
   Grid,
   Paper,
@@ -19,10 +19,11 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { Formik, Form, Field, ErrorMessage, setError } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@material-ui/core";
-import { forgetPassword, resendOtpCall } from "../services/auth";
+import { forgetPassword, resendOtpCall } from "../../services/auth";
+import { useHistory } from "react-router-dom";
 
 const ResetPassword = () => {
-  // const location = useLocation();
+  let history = useHistory();
   const paperStyle = {
     padding: "30px 20px",
     height: "580px",
@@ -68,6 +69,9 @@ const validationSchemaReset = Yup.object().shape({
         console.log(res);
 
         props.setSubmitting(false);
+        setTimeout(() => {
+          history.push("/");
+        }, 1000);
       })
       .catch((err) => {
         props.setFieldError("otp", "Otp is invalid");

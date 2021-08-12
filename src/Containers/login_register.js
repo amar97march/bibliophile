@@ -4,8 +4,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 // import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Login from '../Components/login';
-import Signup from '../Components/signup';
+import Login from '../Components/authentication/login';
+import Signup from '../Components/authentication/signup';
 import '../css/signin.css'
 
 

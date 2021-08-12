@@ -1,0 +1,8 @@
+.books-list-container{
+    margin: 40px;
+}
+
+.MuiAppBar-colorPrimary {
+    color: #fff;
+    background-color: #8699ff;
+}

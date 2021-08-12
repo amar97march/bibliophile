@@ -2,9 +2,9 @@ import { React, useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "../css/signin.css";
 import LoginRegisterContainer from "./login_register";
-import VerifyEmailOtp from "../Components/verify_email_otp";
-import VerifyEmail from "../Components/verify_email";
-import ResetPassword from "../Components/forgot_password";
+import VerifyEmailOtp from "../Components/authentication/verify_email_otp";
+import VerifyEmail from "../Components/authentication/verify_email";
+import ResetPassword from "../Components/authentication/forgot_password";
 
 const LoginSection = () => {
   return (

@@ -1,13 +1,15 @@
 import React from "react";
 // import { useHistory } from 'react-router-dom';
-import "../css/signin.css";
+import "../../css/signin.css";
 import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@material-ui/core'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import { signin } from "../services/auth";
+import { signin } from "../../services/auth";
+import { useHistory } from "react-router-dom";
 
 const Login = ({ handleChange }) => {
+    let history = useHistory();
     const paperStyle = { padding: "30px 20px", height: '580px', width: 290, margin: '0px auto' }
     const avatarStyle = { backgroundColor: "green" }
     const btstyle = { margin: "8px 0" }
@@ -32,7 +34,7 @@ const Login = ({ handleChange }) => {
         console.log(res);
         props.resetForm()
         props.setSubmitting(false)
-        alert("Login successful")
+        history.push("/");
         })
         .catch((err) => {
           console.log(err);

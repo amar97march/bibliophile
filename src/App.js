@@ -2,6 +2,7 @@
 import { BrowserRouter as Router,Switch, Route } from 'react-router-dom';
 import './App.css';
 import LoginSection from './Containers/login_section'
+import Home from './Components/home/home';
 import axios from 'axios';
 
 axios.defaults.xsrfCookieName = 'csrftoken'
@@ -12,7 +13,7 @@ function App() {
     <Router>
     <div className = "App">
       <Switch>
-      forget_password
+        <Route path="/home/" exact component={Home}/>
         <Route path="/" component={LoginSection} />
         {/* <Route component = {RouterUrl}/> */}
         </Switch>

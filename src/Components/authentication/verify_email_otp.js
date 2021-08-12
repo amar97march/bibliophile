@@ -1,6 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import "../css/signin.css";
+import "../../css/signin.css";
 import {
   Grid,
   Paper,
@@ -19,10 +19,12 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { Formik, Form, Field, ErrorMessage, setError } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@material-ui/core";
-import { verifyAccountOtp, resendOtpCall } from "../services/auth";
+import { verifyAccountOtp, resendOtpCall } from "../../services/auth";
+import { useHistory } from "react-router-dom";
 
 const VerifyEmailOtp = () => {
   const location = useLocation();
+  let history = useHistory();
   const paperStyle = {
     padding: "30px 20px",
     height: "580px",
@@ -54,7 +56,9 @@ const VerifyEmailOtp = () => {
         console.log(res);
 
         props.setSubmitting(false);
-        alert("Account verified");
+        setTimeout(() => {
+          history.push("/");
+        }, 5000);
       })
       .catch((err) => {
         props.setFieldError("otp", "Otp is invalid");

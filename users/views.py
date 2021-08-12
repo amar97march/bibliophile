@@ -90,7 +90,7 @@ class VerifyOtp(APIView):
             email_token = uuid.uuid4()
             print("hello3")
             subject = "Your email needs to be verifed"
-            message =  f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://bibliophile-react-django.herokuapp.com/users/email_verification/{user_obj.email}/{email_token}/"
+            message =  f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://bibliophile-react-django.herokuapp.com/verify_email/{user_obj.email}/{email_token}/"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user_obj.email]
             print("hello4")

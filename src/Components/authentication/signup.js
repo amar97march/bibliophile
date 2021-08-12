@@ -1,6 +1,6 @@
 import React from "react";
 // import { useHistory } from 'react-router-dom';
-import "../css/signin.css";
+import "../../css/signin.css";
 import { useHistory } from "react-router-dom";
 import {
   Grid,
@@ -20,7 +20,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { Formik, Form, Field, ErrorMessage, setError } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@material-ui/core";
-import { signup } from "../services/auth";
+import { signup } from "../../services/auth";
 
 const Signup = () => {
   const paperStyle = {
