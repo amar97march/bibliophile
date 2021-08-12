@@ -15,7 +15,7 @@ export const signin = (payload) => {
   export const signup = (payload) => {
     return Axios({
       method: "POST",
-      url: `${baseUrl}/api/user/register/`,
+      url: `${baseUrl}/api/users/register/`,
       data: payload,
     });
   };
