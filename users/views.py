@@ -9,7 +9,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .helpers import send_otp_to_mobile
 from rest_framework_simplejwt.tokens import RefreshToken
 import random
-from django.core.cache import cache
+# from django.core.cache import cache
 from django.db.models import Q
 
 class RegisterView(APIView):
@@ -145,10 +145,10 @@ class ResetPasswordEmailOTP(APIView):
     def post(self, request):
         try:
             user_data = User.objects.get(email = request.data.get("email"))
-            if cache.get(f"RESET-{user_data.email}"):
-                return Response({"status":403,  "error":f"Please retry after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
+            # if cache.get(f"RESET-{user_data.email}"):
+            #     return Response({"status":403,  "error":f"Please retry after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
             otp_to_sent = random.randint(1000,9999)
-            cache.set(f"RESET-{user_data.email}", otp_to_sent, timeout=60)
+            # cache.set(f"RESET-{user_data.email}", otp_to_sent, timeout=60)
             user_data.otp = otp_to_sent
             subject = "Otp for resetting password"
             message =  f"Your OTP is {otp_to_sent}"

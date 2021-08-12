@@ -16,7 +16,6 @@ import os
 import django_heroku
 import dotenv
 import dj_database_url
-from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -221,6 +220,3 @@ options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
 
 CSRF_COOKIE_SECURE = False
-
-REDIS_URL = os.getenv('REDISTOGO_URL', 'redis://localhost:6379/0')
-CELERY_RESULT_BACKEND = REDIS_URL
