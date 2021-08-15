@@ -1,8 +1,101 @@
-.books-list-container{
-    margin: 40px;
+.books-list-container {
+  margin: 40px;
 }
 
 .MuiAppBar-colorPrimary {
-    color: #fff;
-    background-color: #8699ff;
+  color: #fff;
+  background-color: #8699ff;
+}
+
+
+.books-list-container {
+    display: flex;
+	flex-flow: row wrap;
+	/* justify-content: center; */
+	margin: 5px 0;
+}
+
+.books-list-container .order-inner-product {
+  /* border: 1px solid #b8c8cc; */
+  margin: 2%;
+  width: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.041);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  padding: 2%;
+}
+
+.books-list-container .order-inner-product .container {
+    overflow: hidden;
+    
+    
+  /* border: 1px solid rgba(0, 0, 0, 0.103); */
+  /* box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.1); */
+  /* height: 100px; */
+  font-family: Whitney, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  line-height: 24px;
+  /* vertical-align:baseline;
+    letter-spacing:normal;
+    word-spacing:0px; */
+  font-weight: 500;
+  font-size: 12px;
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+  text-decoration: none solid rgb(40, 44, 63);
+  text-align: start;
+  text-indent: 0px;
+  /* display: flex; */
+  /* float: right; */
+  /* flex-direction: row; */
+  justify-content: space-around;
+}
+
+.books-list-container .order-inner-product .container .image-product-id {
+  margin: auto auto auto 2%;
+  /* float: left; */
+  height: 95%;
+}
+.books-list-container .order-inner-product .container .image-product-id .image {
+  height: 80%;
+}
+
+.books-list-container
+  .order-inner-product
+  .container
+  .image-product-id
+  .product-id {
+  height: 20%;
+  margin-bottom: 1px;
+}
+
+.books-list-container
+  .order-inner-product
+  .container
+  .image-product-id
+  .image
+  .img-item {
+  width: 100%;
+  max-height: 230px;
+  border: 1px solid #3333333a;
+}
+
+.books-list-container .order-inner-product .container .item-info {
+  margin: 2% auto 2% auto;
+  /* float: left; */
+  color: rgba(0, 0, 0, 0.5);
+
+  /* margin:0px; */
+  /* padding:0px 20px 0px 0px; */
+}
+
+.books-list-container .order-inner-product .container .item-info .name {
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+}
+
+.books-list-container .order-inner-product .container .item-price {
+  margin: 5% 10px 2% auto;
+  /* float: right; */
+  /* height:20%; */
 }

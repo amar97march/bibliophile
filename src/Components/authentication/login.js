@@ -5,7 +5,7 @@ import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mater
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import { signin } from "../../services/auth";
+import { signin, saveTokenToLocalstorage } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 
 const Login = ({ handleChange }) => {
@@ -29,12 +29,12 @@ const Login = ({ handleChange }) => {
         const payload = values;
         signin(payload)
         .then((res) => {
-        //   saveTokenToLocalstorage(res.data.token);
+          saveTokenToLocalstorage(res.data.access);
         //   setSuccess(true);
         console.log(res);
         props.resetForm()
         props.setSubmitting(false)
-        history.push("/");
+        history.push("/home/");
         })
         .catch((err) => {
           console.log(err);

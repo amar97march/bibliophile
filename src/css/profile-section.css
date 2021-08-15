@@ -1,0 +1,73 @@
+.profile_section{
+  text-align: center;
+  width: 100%
+
+}
+
+
+.profile_section h3{
+  box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
+  padding: 10px;
+}
+
+.profile_section .profile-subsection {
+  margin: 5%;
+
+display: flex;
+}
+
+
+.profile_section .profile-subsection .profile-image {
+  width: 35%;
+  float: left;
+  text-align: right;
+  padding: 0px 20px;
+  border-right: 5px solid #ffe17c;
+
+}
+
+.profile_section .profile-subsection .profile-form {
+  width: 65%;
+  text-align:left;
+  padding: 20px 100px;
+}
+
+
+.profile_section .profile-subsection .profile-form .MuiGrid-align-items-xs-center{
+  align-items: start;
+}
+
+@media (max-width: 767px) {
+  /* .profile_section {margin: auto;} */
+  .profile_section .profile-subsection {
+    display: block;
+    }
+  .profile_section .profile-subsection .profile-image{
+    text-align: center;
+    width: 100%;
+    border-right: none;
+    padding: 20px 20px 20px 20px;
+    border-bottom: 5px solid #ffe17c;
+  }
+
+  .profile_section .profile-subsection .profile-image img{
+    width: 100%;
+    height: auto;
+    /* padding: 5% */
+
+  }
+  .profile_section .profile-subsection .profile-form {
+    /* width: 100%; */
+    text-align:left;
+    /* padding: 20px 20px; */
+  }
+  .profile_section .profile-subsection .profile-form .MuiGrid-align-items-xs-center{
+    align-items: center;
+  }
+  }
+
+
+  .profile_section .profile-subsection .profile-form .extra-section{
+    border-top: 2px solid #b4b4b4;
+    margin: 20px 0px;
+  }

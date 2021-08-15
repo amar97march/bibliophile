@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { alpha, makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -17,6 +17,8 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import { SearchBook } from "../../services/auth";
 import Pagination from "@material-ui/lab/Pagination";
 import '../../css/home.css'
+import { useHistory, Link } from "react-router-dom";
+import BookNA from "../../Assets/book_na.jpg"
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -82,6 +84,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+function BookItem(props) {
+  return (
+    <div className="order-inner-product col-md-3 col-sm-4 col-6">
+      <div className="container">
+        <div className="image-product-id">
+          <Link
+            to={"/book_info/"+props.productId}
+          >
+            <div className="image">
+              <img className="img-item" src={props.image} alt="" />
+            </div>
+          </Link>
+        </div>
+        <div className="item-info">
+          <div className="name">{props.title}</div>
+          <div className="quantity">Author: {props.author}</div>
+          <div className="size">Page Count: {props.pageCount}</div>
+        </div>
+        <div className="item-price">
+          <div>Price: {props.price} {props.currency}</div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -91,13 +121,20 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("")
   const [totalPages, setTotalPages] = useState(0)
+  let history = useHistory()
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
+    
+
   };
+
+  const handleProfileMenuClick = () => {
+    history.push("/profile/")
+  }
 
   const searchTrigger = (event) => {
     var search_text = event.target.value; // this is the search text
@@ -162,7 +199,7 @@ export default function Home() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+      <MenuItem onClick={handleProfileMenuClick}>Profile</MenuItem>
       <MenuItem onClick={handleMenuClose}>My account</MenuItem>
     </Menu>
   );
@@ -282,18 +319,29 @@ export default function Home() {
       {renderMenu}
     <div className="books-list-container">
       {books.map((noteItem) => (
-        <div>
-            <div>Id: {noteItem.id}</div>
-            <div>Title: {noteItem.volumeInfo.title}</div>
-            <div>Author: {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}</div>
-            <div>Publisher: {noteItem.publisher}</div>
-            <div>Description: {noteItem.description}</div>
-            <div>Page Count: {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}</div>
-            <img src = {noteItem.volumeInfo.imageLinks && noteItem.volumeInfo.imageLinks.thumbnail} alt = "Book cover"/>
-            <br/>
-            <br/>
-            <br/>
-            </div>
+        <BookItem
+        key={noteItem.id}
+        productId = {noteItem.id}
+        image={noteItem.volumeInfo.imageLinks ? noteItem.volumeInfo.imageLinks.thumbnail:BookNA}
+        title={(noteItem.volumeInfo.title.length < 24)?noteItem.volumeInfo.title:noteItem.volumeInfo.title.substring(0,25)+"..."}
+        author = {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}
+        pageCount = {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}
+        description = {noteItem.volumeInfo.description}
+        price = {noteItem.saleInfo.retailPrice ? noteItem.saleInfo.retailPrice.amount:"NA"}
+        currency = {noteItem.saleInfo.retailPrice ? noteItem.saleInfo.retailPrice.currencyCode:""}
+      />
+        // <div>
+        //     <div>Id: {noteItem.id}</div>
+        //     <div>Title: {noteItem.volumeInfo.title}</div>
+        //     <div>Author: {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}</div>
+        //     <div>Publisher: {noteItem.publisher}</div>
+        //     <div>Description: {noteItem.description}</div>
+        //     <div>Page Count: {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}</div>
+        //     <img src = {noteItem.volumeInfo.imageLinks && noteItem.volumeInfo.imageLinks.thumbnail} alt = "Book cover"/>
+        //     <br/>
+        //     <br/>
+        //     <br/>
+        //     </div>
       ))}
         </div>
       <Pagination

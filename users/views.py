@@ -113,6 +113,16 @@ class UserProfile(APIView):
         data["profile_image"] = settings.ROOT_URL+'staticfiles/'+data['profile_image'] if data['profile_image'] else None
         return Response({"status":200, "data":serializer.data})
 
+    def put(self, request):
+        user_data = User.objects.get(id = request.user.id)
+        serializer = UserSerializer(request.user, data=request.data, partial=True)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({"status":200, "data":serializer.data})
+        else:
+            return Response({'status': 404, 'error':random.serializer.errors}, status = status.HTTP_403_FORBIDDEN)
+
+
 
 class EmailVerification(APIView):
     authentication_classes = []
