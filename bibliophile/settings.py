@@ -18,9 +18,7 @@ import dotenv
 import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR = Path(__file__).resolve().root.root
 
 dotenv_file = os.path.join(BASE_DIR, ".env")
@@ -200,7 +198,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-STATIC_URL = 'https://bibliophile-react-django.herokuapp.com/static/'
+STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
