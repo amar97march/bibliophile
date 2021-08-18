@@ -87,7 +87,7 @@ const BookReviews = (props) => {
             <div className = "user-review">
               <div className = "review-details">
               <div className = "review-user"><Link
-                    to={"/user_profile/"+props.user_id+"/"}
+                    to={"/user_profile/"+review_item.user_id+"/"}
                   >{review_item.user}</Link></div>
               <div className = "review-timestamp">{new Date(review_item.timestamp).toLocaleString()}</div>
               </div>
