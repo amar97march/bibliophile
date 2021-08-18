@@ -11,8 +11,8 @@ const LoginSection = () => {
     <div className="SigninOutcontainer">
       <h1>Bibliophile</h1>
       <Switch>
-        <Route path="/forget_password" component={ResetPassword} exact />
-        <Route path="/verify_email_otp" component={VerifyEmailOtp} exact />
+        <Route path="/forget_password/" component={ResetPassword} exact />
+        <Route path="/verify_email_otp/" component={VerifyEmailOtp} exact />
         <Route path="/verify_email/:email/:email_token/" exact component={(props) => <VerifyEmail {...props}/>}/>
         <Route path="/" component={LoginRegisterContainer} exact />
 
