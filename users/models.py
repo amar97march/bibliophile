@@ -22,6 +22,8 @@ class User(AbstractUser):
     email_token = models.CharField(max_length=100, null=True, blank = True)
     last_logout_time = models.DateTimeField(null=True, blank=True)
     profile_image = models.FileField(upload_to='uploads/',null = True, blank = True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
 
     objects= UserManager()
 
@@ -53,3 +55,6 @@ class Friends(models.Model):
     sender = models.ForeignKey(User, related_name='friends_sender',on_delete=CASCADE)
     receiver = models.ForeignKey(User, related_name='friends_receiver', on_delete=CASCADE)
     accepted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    status = models.BooleanField(default=True)

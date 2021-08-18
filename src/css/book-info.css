@@ -16,12 +16,9 @@
   width: 40%;
   float: left;
   background: rgb(2, 0, 36);
-  background: linear-gradient(
-    250deg,
-    rgb(17, 1, 54) 30%,
-    rgb(26, 9, 121) 50%,
-    rgb(58, 155, 219) 100%
-  );
+  background: linear-gradient( 
+250deg
+, rgb(28 58 123) 30%, rgb(47 56 93) 50%, rgb(65 112 154) 100% );  
   background-repeat: no-repeat;
   background-size: 70% 100%;
   vertical-align: middle;
@@ -44,6 +41,21 @@
 
 .book-info-root .book-info-outer-section .background-right .book-info-inner {
   width: 100%;
+}
+
+.book-info-root .book-info-outer-section .background-right .user-btn-section{
+  float: right;
+}
+
+.book-info-root .book-info-outer-section .background-right .user-btn-section button{
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  margin: auto 5px;
+}
+
+.book-info-root .book-info-outer-section .background-right .user-btn-section img{
+  height: 50px;
 }
 
 .book-info-root
@@ -69,7 +81,7 @@
   .background-right
   .book-info-inner
   .author {
-    margin: 20px auto;
+  margin: 20px auto;
   font-family: "Domine", serif;
   font-size: 20px;
   color: rgb(201, 201, 201);
@@ -84,8 +96,8 @@
   font-size: 20px;
   color: rgb(119, 119, 119);
   margin: 20px auto 20px;
- height: 520px;
- overflow-y: scroll;
+  height: 520px;
+  overflow-y: scroll;
 }
 
 .book-info-root
@@ -97,4 +109,33 @@
   margin: 20px auto;
   font-size: 20px;
   color: rgb(119, 119, 119);
+}
+
+
+.review_section .MuiButton-containedPrimary{
+  margin: 20px auto;
+}
+
+.review_section {
+  text-align: center;
+}
+
+.review_section .user-review {
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  padding: 30px;
+  margin: 20px auto;
+}
+
+.review_section .user-review {text-align: left ;}
+
+.review_section .user-review .review-details .review-user {
+  float: left;
+}
+.review_section .user-review .review-details .review-timestamp {
+  float: right;
+}
+
+.review_section .user-review .comment {
+  margin: 10px auto;
 }

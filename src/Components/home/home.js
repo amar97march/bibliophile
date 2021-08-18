@@ -13,12 +13,15 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { SearchBook } from "../../services/auth";
 import Pagination from "@material-ui/lab/Pagination";
 import '../../css/home.css'
 import { useHistory, Link } from "react-router-dom";
+import { getHomePageData } from "../../services/auth";
 import BookNA from "../../Assets/book_na.jpg"
+import ProfileBook from "../profile/profile_book";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -121,6 +124,9 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("")
   const [totalPages, setTotalPages] = useState(0)
+  const [topRatedBooks, setTopRatedBooks] = useState([])
+  const [topPopularBooks, setTopPopularBooks] = useState([])
+  const [friendRequestCount, setFriendRequestCount] = useState(0)
   let history = useHistory()
 
   const isMenuOpen = Boolean(anchorEl);
@@ -135,6 +141,25 @@ export default function Home() {
   const handleProfileMenuClick = () => {
     history.push("/profile/")
   }
+
+  const handleFreindMenuOpen = () => {
+    history.push("/friends/")
+  }
+
+  const fetchItems= ()=>{
+    getHomePageData()
+    .then((res) => {
+      console.log(res);
+
+      setTopRatedBooks(res.data.data.top_rating_books);
+      setTopPopularBooks(res.data.data.top_popular_books);
+      setFriendRequestCount(res.data.data.friend_request_count);
+    })
+    .catch((err) => {});
+  }
+
+  useEffect(
+    fetchItems, []);
 
   const searchTrigger = (event) => {
     var search_text = event.target.value; // this is the search text
@@ -215,21 +240,13 @@ export default function Home() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
+      <MenuItem onClick={handleFreindMenuOpen}>
+        <IconButton aria-label="show friend requests" color="inherit">
+          <Badge badgeContent={friendRequestCount} color="secondary">
+            <PeopleAltIcon />
           </Badge>
         </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
+        <p>Friends</p>
       </MenuItem>
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
@@ -280,14 +297,9 @@ export default function Home() {
           <div className={classes.grow} />
 
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon />
+            <IconButton aria-label="show new freind requests" onClick={handleFreindMenuOpen} color="inherit">
+              <Badge badgeContent={friendRequestCount} color="secondary">
+                <PeopleAltIcon />
               </Badge>
             </IconButton>
             <IconButton
@@ -350,6 +362,36 @@ export default function Home() {
         showLastButton
         onChange={handleChange}
       />
+      <div className = "extra-section">
+            <h1>Top Rated Books</h1>
+            <hr/>
+            <div className="books-list-container">
+              {topRatedBooks.map((item) => (
+                
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+          </div>
+          <div className = "extra-section">
+            <h1>Popupar Books</h1>
+            <hr/>
+            <div className="books-list-container">
+              {topPopularBooks.map((item) => (
+                
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+          </div>
+          {/* <div className = "extra-section">
+            <h1>Top Rated Books</h1>
+            <hr/>
+            <div className="books-list-container">
+              {topRatedBooks.map((item) => (
+                
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+          </div> */}
     </div>
   );
 }

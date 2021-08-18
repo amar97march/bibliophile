@@ -5,6 +5,7 @@ import LoginSection from './Containers/login_section'
 import Home from './Components/home/home';
 import axios from 'axios';
 import UserProfile from './Components/profile/user_profile'
+import FriendPage from './Components/friends/user_friends';
 import BookInfoBox from './Containers/book-info-box'
 
 axios.defaults.xsrfCookieName = 'csrftoken'
@@ -18,6 +19,7 @@ function App() {
         <Route path="/home/" exact component={Home}/>
         <Route path="/book_info/:book_id/" exact component={(props) => <BookInfoBox {...props}/>}/>
         <Route path="/profile/" exact component={UserProfile}/>
+        <Route path="/friends/" exact component={FriendPage}/>
         <Route path="/" component={LoginSection} />
         {/* <Route component = {RouterUrl}/> */}
         </Switch>

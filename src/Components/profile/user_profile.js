@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import Select from "@material-ui/core/Select";
-import MenuItem from "@material-ui/core/MenuItem";
-import Slider from "@material-ui/core/Slider";
+
 import Button from "@material-ui/core/Button";
 import "../../css/profile-section.css";
 import { getProfileData, updateProfileData } from "../../services/auth";
-import bull8_logo_white from "../../Assets/profile.jpeg"
+import default_pic from "../../Assets/profile.jpeg"
+import ProfileBook from "./profile_book";
 
 const defaultValues = {
   first_name: "",
@@ -24,6 +18,9 @@ const defaultValues = {
 const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues);
   const [profilePicUrl, setProfilePicUrl] = useState(null)
+  const [wishlist, setWishlist] = useState([])
+  const [readlist, setReadlist] = useState([])
+  const [shelflist, setShelflist] = useState([])
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -46,6 +43,10 @@ const Form = () => {
           res.data.data.description != null ? res.data.data.description : "",
       });
       setProfilePicUrl(res.data.data.profile_image )
+      console.log(res.data.data.wishlist_list);
+      setWishlist(res.data.data.wishlist_list)
+      setShelflist(res.data.data.shelflist_list)
+      setReadlist(res.data.data.readlist_list)
     })
     .catch((err) => {});
   }
@@ -74,7 +75,7 @@ const Form = () => {
       <div className="profile-subsection row">
         <div className="profile-image column">
           <img
-            src={profilePicUrl?profilePicUrl:bull8_logo_white}
+            src={profilePicUrl?profilePicUrl:default_pic}
             alt="Profile"
           />
         </div>
@@ -145,10 +146,38 @@ const Form = () => {
             </Grid>
           </form>
           <div className = "extra-section">
-            My Books
-          </div
-          >
-          <div className = "extra-section">My friends</div>
+            <h1>Currently reading</h1>
+            <hr/>
+            <div className="books-list-container">
+              {readlist.map((item) => (
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+            
+          </div>
+          <div className = "extra-section">
+            <h1>Wishlist</h1>
+            <hr/>
+            <div className="books-list-container">
+              {wishlist.map((item) => (
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+          </div>
+          <div className = "extra-section">
+            <h1>Bookshelf</h1>
+            <hr/>
+            <div className="books-list-container">
+              {shelflist.map((item) => (
+                
+                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+              ))}
+            </div>
+          </div>
+          <div className = "extra-section">
+            <h1>My friends</h1>
+            <hr/>
+            </div>
         </div>
       </div>
     </div>

@@ -1,23 +1,23 @@
-.profile_section{
+.friend_section{
   text-align: center;
   width: 100%
 
 }
 
 
-.profile_section h3{
+.friend_section h3{
   box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
   padding: 10px;
 }
 
-.profile_section .profile-subsection {
+.friend_section .friend-subsection {
   margin: 5%;
 
 display: flex;
 }
 
 
-.profile_section .profile-subsection .profile-image {
+.friend_section .friend-subsection .friend-image {
   width: 20%;
   float: left;
   text-align: right;
@@ -26,23 +26,23 @@ display: flex;
 
 }
 
-.profile_section .profile-subsection .profile-form {
+.friend_section .friend-subsection .friend-form {
   width: 80%;
   text-align:left;
   padding: 20px 100px;
 }
 
 
-.profile_section .profile-subsection .profile-form .MuiGrid-align-items-xs-center{
+.friend_section .friend-subsection .friend-form .MuiGrid-align-items-xs-center{
   align-items: start;
 }
 
 @media (max-width: 767px) {
-  /* .profile_section {margin: auto;} */
-  .profile_section .profile-subsection {
+  /* .friend_section {margin: auto;} */
+  .friend_section .friend-subsection {
     display: block;
     }
-  .profile_section .profile-subsection .profile-image{
+  .friend_section .friend-subsection .friend-image{
     text-align: center;
     width: 100%;
     border-right: none;
@@ -50,52 +50,53 @@ display: flex;
     border-bottom: 5px solid #ffe17c;
   }
 
-  .profile_section .profile-subsection .profile-image img{
+  .friend_section .friend-subsection .friend-image img{
     width: 100%;
     height: auto;
     /* padding: 5% */
 
   }
-  .profile_section .profile-subsection .profile-form {
+  .friend_section .friend-subsection .friend-form {
     /* width: 100%; */
     text-align:left;
     /* padding: 20px 20px; */
   }
-  .profile_section .profile-subsection .profile-form .MuiGrid-align-items-xs-center{
+  .friend_section .friend-subsection .friend-form .MuiGrid-align-items-xs-center{
     align-items: center;
   }
   }
 
-  .profile_section .profile-subsection .profile-form .MuiGrid-item{
+  .friend_section .friend-subsection .friend-form .MuiGrid-item{
     margin: 20px 0px;
   }
 
 
-  .profile_section .profile-subsection .profile-form .extra-section{
+  .friend_section .friend-subsection .friend-form .extra-section{
     /* border-top: 2px solid #b4b4b4; */
     margin: 20px 0px;
   }
 
-  .profile_section .profile-subsection .profile-form .books-list-container {
+  .friend_section .friend-subsection .friend-form .friends-list-container {
     display: flex;
 	flex-flow: row wrap;
 	/* justify-content: center; */
 	margin: 5px 0;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section {
   /* border: 1px solid #b8c8cc; */
   margin: 2%;
-  width: 150px;
+  height: 100px;
+  /* width: 150px; */
   border: 1px solid rgba(0, 0, 0, 0.041);
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   padding: 2%;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container {
     overflow: hidden;
     
-    
+    height:100%;
   /* border: 1px solid rgba(0, 0, 0, 0.103); */
   /* box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.1); */
   /* height: 100px; */
@@ -113,23 +114,23 @@ display: flex;
   text-decoration: none solid rgb(40, 44, 63);
   text-align: start;
   text-indent: 0px;
-  /* display: flex; */
+  display: flex;
   /* float: right; */
   /* flex-direction: row; */
   justify-content: space-around;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container .image-product-id {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .image-product-id {
   margin: auto auto auto 2%;
   /* float: left; */
-  height: 95%;
+  height: 100%;
 }
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container .image-product-id .image {
-  height: 80%;
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .image-product-id .image {
+  height: 100%;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container
-  .order-inner-product
+.friend_section .friend-subsection .friend-form .friends-list-container
+  .friend-inner-section
   .container
   .image-product-id
   .product-id {
@@ -137,18 +138,18 @@ display: flex;
   margin-bottom: 1px;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container
-  .order-inner-product
+.friend_section .friend-subsection .friend-form .friends-list-container
+  .friend-inner-section
   .container
   .image-product-id
   .image
   .img-item {
-  width: 100%;
+  height: 100%;
   max-height: 230px;
   border: 1px solid #3333333a;
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container .item-info {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info {
   margin: 2% auto 2% auto;
   /* float: left; */
   color: rgba(0, 0, 0, 0.5);
@@ -157,12 +158,12 @@ display: flex;
   /* padding:0px 20px 0px 0px; */
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container .item-info .name {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info .name {
   font-size: 16px;
   color: rgb(0, 0, 0);
 }
 
-.profile_section .profile-subsection .profile-form .books-list-container .order-inner-product .container .item-price {
+.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-price {
   margin: 5% 10px 2% auto;
   /* float: right; */
   /* height:20%; */

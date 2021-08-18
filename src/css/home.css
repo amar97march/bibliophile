@@ -4,15 +4,14 @@
 
 .MuiAppBar-colorPrimary {
   color: #fff;
-  background-color: #8699ff;
+  background-color: #313650 !important;
 }
 
-
 .books-list-container {
-    display: flex;
-	flex-flow: row wrap;
-	/* justify-content: center; */
-	margin: 5px 0;
+  display: flex;
+  flex-flow: row wrap;
+  /* justify-content: center; */
+  margin: 5px 0;
 }
 
 .books-list-container .order-inner-product {
@@ -20,14 +19,13 @@
   margin: 2%;
   width: 150px;
   border: 1px solid rgba(0, 0, 0, 0.041);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  padding: 2%;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  padding: 1%;
 }
 
 .books-list-container .order-inner-product .container {
-    overflow: hidden;
-    
-    
+  overflow: hidden;
+
   /* border: 1px solid rgba(0, 0, 0, 0.103); */
   /* box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.1); */
   /* height: 100px; */
@@ -98,4 +96,9 @@
   margin: 5% 10px 2% auto;
   /* float: right; */
   /* height:20%; */
+}
+
+.MuiPagination-root {
+  justify-content: center;
+  display: flex;
 }

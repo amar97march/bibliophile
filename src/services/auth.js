@@ -101,7 +101,78 @@ export const getBookInfo = (product_id) => {
 export const getBookReviews = (product_id) => {
   return Axios({
     method: "get",
-    url: `${baseUrl}/api/users/profile/${product_id}/`,
+    url: `${baseUrl}/api/books/book_info/${product_id}/`,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+
+export const addBookReview = (payload) => {
+  return Axios({
+    method: "POST",
+    url: `${baseUrl}/api/books/book_reviews/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+export const addWishlist = (payload) => {
+  return Axios({
+    method: "PUT",
+    url: `${baseUrl}/api/books/book_wishlist/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+export const addReadlist = (payload) => {
+  return Axios({
+    method: "PUT",
+    url: `${baseUrl}/api/books/book_readlist/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+export const addShelflist = (payload) => {
+  return Axios({
+    method: "PUT",
+    url: `${baseUrl}/api/books/book_shelflist/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+
+export const getHomePageData = () => {
+  return Axios({
+    method: "get",
+    url: `${baseUrl}/api/users/home_page/`,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+
+export const getFriendsData = () => {
+  return Axios({
+    method: "get",
+    url: `${baseUrl}/api/users/friend_requests/`,
     headers: {
       accept: "application/json",
       Authorization: AuthStr,
