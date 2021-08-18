@@ -200,7 +200,7 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-STATIC_URL = '/static/'
+STATIC_URL = 'https://bibliophile-react-django.herokuapp.com/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'build/static')
