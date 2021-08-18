@@ -5,6 +5,7 @@ import Button from "@material-ui/core/Button";
 import "../../css/book-info.css";
 import { addBookReview } from "../../services/auth";
 import StarRatings from "react-star-ratings";
+import { Link } from "react-router-dom";
 // import profile_image from "../../Assets/profile.jpeg";
 
 const defaultValues = {
@@ -85,7 +86,9 @@ const BookReviews = (props) => {
           {props.reviews.map((review_item) => (
             <div className = "user-review">
               <div className = "review-details">
-              <div className = "review-user">{review_item.user}</div>
+              <div className = "review-user"><Link
+                    to={"/user_profile/"+props.user_id+"/"}
+                  >{review_item.user}</Link></div>
               <div className = "review-timestamp">{new Date(review_item.timestamp).toLocaleString()}</div>
               </div>
               <div style={{"clear": "both"}} ></div>

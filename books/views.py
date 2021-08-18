@@ -57,7 +57,7 @@ class BookInfo(APIView):
                 shelflist_status = False
             all_reviews = BookReview.objects.filter(book = book_obj).order_by("-created_at")
             average_rating = all_reviews.aggregate(Avg('rating'))
-            book_review = [{"rating":inst.rating,"comment":inst.comment, "user":inst.user.email, "timestamp":inst.updated_at} 
+            book_review = [{"rating":inst.rating,"comment":inst.comment, "user_id": inst.user.id, "user":inst.user.email, "timestamp":inst.updated_at} 
             for inst in all_reviews]
 
 
