@@ -1,8 +1,8 @@
 import Axios from "axios";
 
 
-// const baseUrl = "https://bibliophile-react-django.herokuapp.com"
-const baseUrl = "http://127.0.0.1:8000"
+const baseUrl = "https://bibliophile-react-django.herokuapp.com"
+// const baseUrl = "http://127.0.0.1:8000"
 
 let authToken = localStorage.getItem("bibliophile_token");
 let AuthStr = `Bearer ${authToken}`;

@@ -211,8 +211,8 @@ MEDIA_URL="/media/"
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
-# ROOT_URL = "https://bibliophile-react-django.herokuapp.com/"
-ROOT_URL = "http://127.0.0.1:8000/"
+ROOT_URL = "https://bibliophile-react-django.herokuapp.com/"
+# ROOT_URL = "http://127.0.0.1:8000/"
 
 CORS_ORIGIN_ALLOW_ALL = True
 
