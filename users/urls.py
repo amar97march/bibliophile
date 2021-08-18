@@ -8,6 +8,7 @@ urlpatterns = [
 
     path('register/',RegisterView.as_view()),
     path('verify_otp/', VerifyOtp.as_view()),
+    path('user_profile/<user_id>/',FriendProfile.as_view()),
     path('profile/', UserProfile.as_view()),
     path('email_verification/', EmailVerification.as_view()),
     path('reset_password_otp/',ResetPasswordEmailOTP.as_view()),

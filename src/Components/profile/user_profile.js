@@ -5,8 +5,9 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import "../../css/profile-section.css";
 import { getProfileData, updateProfileData } from "../../services/auth";
-import default_pic from "../../Assets/profile.jpeg"
+import default_pic from "../../Assets/profile.jpeg";
 import ProfileBook from "./profile_book";
+import FriendsUser from "../friends/friend_user";
 
 const defaultValues = {
   first_name: "",
@@ -15,12 +16,13 @@ const defaultValues = {
   email: "",
   description: "",
 };
-const Form = () => {
+const MyProfile = () => {
   const [formValues, setFormValues] = useState(defaultValues);
-  const [profilePicUrl, setProfilePicUrl] = useState(null)
-  const [wishlist, setWishlist] = useState([])
-  const [readlist, setReadlist] = useState([])
-  const [shelflist, setShelflist] = useState([])
+  const [profilePicUrl, setProfilePicUrl] = useState(null);
+  const [wishlist, setWishlist] = useState([]);
+  const [readlist, setReadlist] = useState([]);
+  const [shelflist, setShelflist] = useState([]);
+  const [friends, setFriends] = useState([]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -29,45 +31,43 @@ const Form = () => {
     });
   };
 
-  const fetchItems= ()=>{
+  const fetchItems = () => {
     getProfileData()
-    .then((res) => {
-      console.log(res);
+      .then((res) => {
+        console.log(res);
 
-      setFormValues({
-        first_name: res.data.data.first_name,
-        last_name: res.data.data.last_name,
-        phone: res.data.data.phone,
-        email: res.data.data.email,
-        description:
-          res.data.data.description != null ? res.data.data.description : "",
-      });
-      setProfilePicUrl(res.data.data.profile_image )
-      console.log(res.data.data.wishlist_list);
-      setWishlist(res.data.data.wishlist_list)
-      setShelflist(res.data.data.shelflist_list)
-      setReadlist(res.data.data.readlist_list)
-    })
-    .catch((err) => {});
-  }
+        setFormValues({
+          first_name: res.data.data.first_name,
+          last_name: res.data.data.last_name,
+          phone: res.data.data.phone,
+          email: res.data.data.email,
+          description:
+            res.data.data.description != null ? res.data.data.description : "",
+        });
+        setProfilePicUrl(res.data.data.profile_image);
+        console.log(res.data.data.wishlist_list);
+        setWishlist(res.data.data.wishlist_list);
+        setShelflist(res.data.data.shelflist_list);
+        setReadlist(res.data.data.readlist_list);
+        setFriends(res.data.data.friends);
+      })
+      .catch((err) => {});
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formValues);
     updateProfileData(formValues)
-    .then((res) => {
-      console.log(res);
-      alert("Updated")
-    })
-    .catch((err) => {
-      alert("Please try again later")
-    });
-    
+      .then((res) => {
+        console.log(res);
+        alert("Updated");
+      })
+      .catch((err) => {
+        alert("Please try again later");
+      });
   };
 
-  useEffect(
-    fetchItems, []);
-
+  useEffect(fetchItems, []);
 
   return (
     <div className="profile_section">
@@ -75,7 +75,7 @@ const Form = () => {
       <div className="profile-subsection row">
         <div className="profile-image column">
           <img
-            src={profilePicUrl?profilePicUrl:default_pic}
+            src={profilePicUrl ? profilePicUrl : default_pic}
             alt="Profile"
           />
         </div>
@@ -145,42 +145,63 @@ const Form = () => {
               </Button>
             </Grid>
           </form>
-          <div className = "extra-section">
+          <div className="extra-section">
             <h1>Currently reading</h1>
-            <hr/>
+            <hr />
             <div className="books-list-container">
               {readlist.map((item) => (
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+                <ProfileBook
+                  title={item.title}
+                  image_link={item.image_link}
+                  unique_book_id={item.unique_book_id}
+                />
               ))}
             </div>
-            
           </div>
-          <div className = "extra-section">
+          <div className="extra-section">
             <h1>Wishlist</h1>
-            <hr/>
+            <hr />
             <div className="books-list-container">
               {wishlist.map((item) => (
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+                <ProfileBook
+                  title={item.title}
+                  image_link={item.image_link}
+                  unique_book_id={item.unique_book_id}
+                />
               ))}
             </div>
           </div>
-          <div className = "extra-section">
+          <div className="extra-section">
             <h1>Bookshelf</h1>
-            <hr/>
+            <hr />
             <div className="books-list-container">
               {shelflist.map((item) => (
-                
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+                <ProfileBook
+                  title={item.title}
+                  image_link={item.image_link}
+                  unique_book_id={item.unique_book_id}
+                />
               ))}
             </div>
           </div>
-          <div className = "extra-section">
+          <div className="extra-section">
             <h1>My friends</h1>
-            <hr/>
+            <hr />
+            <div className="friends-list-container">
+              {friends.map((item) => (
+                <FriendsUser
+                  key={item.id}
+                  fetchItems={fetchItems}
+                  email={item.user.email}
+                  image_link={item.user.profile_image}
+                  user_id={item.user.id}
+                />
+              ))}
             </div>
+          </div>
         </div>
       </div>
     </div>
   );
 };
-export default Form;
+export default MyProfile;

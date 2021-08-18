@@ -120,9 +120,15 @@ class UserProfile(APIView):
                          Wishlist.objects.filter(user=user_data, status=True)]
         readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
                          Readlist.objects.filter(user=user_data, status=True)]
+        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
+                            Friends.objects.filter(receiver=request.user, accepted=True, status = True)]
+        friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
+                        Friends.objects.filter(sender=request.user, accepted=True, status = True)]
+        friends_list.extend(friends_list_send)
         data["shelflist_list"] = shelflist_list
         data["wishlist_list"] = wishlist_list
         data["readlist_list"] = readlist_list
+        data["friends"] = friends_list
         data["profile_image"] = settings.ROOT_URL+'staticfiles/' + \
             data['profile_image'] if data['profile_image'] else None
         return Response({"status": 200, "data": data})
@@ -136,6 +142,44 @@ class UserProfile(APIView):
             return Response({"status": 200, "data": serializer.data})
         else:
             return Response({'status': 404, 'error': random.serializer.errors}, status=status.HTTP_403_FORBIDDEN)
+
+
+class FriendProfile(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, user_id):
+        user_data = User.objects.get(id=user_id)
+        serializer = UserSerializer(user_data)
+        data = serializer.data
+        shelflist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
+                           "image_link": inst.book.image_link} for inst in Shelflist.objects.filter(user=user_data, status=True)]
+        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+                         Wishlist.objects.filter(user=user_data, status=True)]
+        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+                         Readlist.objects.filter(user=user_data, status=True)]
+        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
+                            Friends.objects.filter(receiver=user_data, accepted=True, status = True)]
+        friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
+                        Friends.objects.filter(sender=user_data, accepted=True, status = True)]
+        friends_list.extend(friends_list_send)
+        request_obj = Friends.objects.filter(sender=request.user,receiver = user_data, status = True).first()
+        if request_obj and request_obj.accepted == True:
+            request_status = 2
+        elif request_obj and request_obj.accepted == False:
+            request_status = 1
+        elif int(user_id) == request.user.id:
+            request_status = 4
+        else:
+            request_status = 0
+        data["request_status"] = request_status
+        data["shelflist_list"] = shelflist_list
+        data["wishlist_list"] = wishlist_list
+        data["readlist_list"] = readlist_list
+        data["friends"] = friends_list
+        data["profile_image"] = settings.ROOT_URL+'staticfiles/' + \
+            data['profile_image'] if data['profile_image'] else None
+        return Response({"status": 200, "data": data})
 
 
 class EmailVerification(APIView):
@@ -232,9 +276,9 @@ class FriendRequest(APIView):
 
         try:
             friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
-                            Friends.objects.filter(receiver=user, accepted=True)]
+                            Friends.objects.filter(receiver=user, accepted=True, status = True)]
             friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                            Friends.objects.filter(sender=user, accepted=True)]
+                            Friends.objects.filter(sender=user, accepted=True, status = True)]
             friends_list.extend(friends_list_send)
             pending_requests = [{"id": obj.id, "user": UserSerializer(
                 obj.sender).data} for obj in Friends.objects.filter(receiver=user, accepted=False)]
@@ -251,15 +295,16 @@ class FriendRequest(APIView):
         data = request.data
 
         request_id = data.get('request_id')
-        friend_request_obj = Friends.objects.filter(sender=user, id=request_id)
+        request_status = bool(data.get('status'))
+        friend_request_obj = Friends.objects.filter(receiver=user, id=request_id, status = True)
         if not friend_request_obj.exists():
             return Response({"status": 403, "error": "Invalid friend request id"})
         else:
             friend_request_obj = friend_request_obj.first()
 
-        friend_request_obj.accepted = True
+        friend_request_obj.accepted = request_status
         friend_request_obj.save()
-        return Response({"status": 403, "error": "Friend request already sent"})
+        return Response({"status": 200, "error": "Friend request updated"})
 
 
 class HomePage(APIView):

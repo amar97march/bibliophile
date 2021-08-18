@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import parse from "html-react-parser";
 import StarRatings from 'react-star-ratings';
 // import "../css/book-info.css";

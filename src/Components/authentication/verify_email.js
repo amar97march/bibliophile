@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import "../../css/signin.css";
 import {
   Grid,
   Paper,
   Avatar,
-  TextField,
   Button,
   Typography,
 } from "@material-ui/core";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import { Formik, Form, Field, ErrorMessage, setError } from "formik";
-import * as Yup from "yup";
-import { FormHelperText } from "@material-ui/core";
 import { verifyEmailAPI } from "../../services/auth";
 
 const VerifyEmail = (props) => {

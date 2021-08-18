@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from "react";
-import parse from "html-react-parser";
-import StarRatings from 'react-star-ratings';
+import React from "react";
 import BookNA from "../../Assets/book_na.jpg"
 import { Link } from "react-router-dom";
 

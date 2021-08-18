@@ -77,14 +77,15 @@ display: flex;
   }
 
   .friend_section .friend-subsection .friend-form .friends-list-container {
-    display: flex;
-	flex-flow: row wrap;
+    /* display: flex; */
+	/* flex-flow: row wrap; */
 	/* justify-content: center; */
 	margin: 5px 0;
 }
 
 .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section {
   /* border: 1px solid #b8c8cc; */
+  border-radius: 10px;
   margin: 2%;
   height: 100px;
   /* width: 150px; */

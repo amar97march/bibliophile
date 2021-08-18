@@ -10,15 +10,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
-import Radio from "@material-ui/core/Radio";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormControl from "@material-ui/core/FormControl";
-import FormLabel from "@material-ui/core/FormLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import { Formik, Form, Field, ErrorMessage, setError } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { FormHelperText } from "@material-ui/core";
 import { verifyAccountOtp, resendOtpCall } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 

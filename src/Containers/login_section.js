@@ -1,5 +1,5 @@
-import { React, useState } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { React } from "react";
+import { Switch, Route } from "react-router-dom";
 import "../css/signin.css";
 import LoginRegisterContainer from "./login_register";
 import VerifyEmailOtp from "../Components/authentication/verify_email_otp";

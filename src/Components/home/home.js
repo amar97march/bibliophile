@@ -11,8 +11,6 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import MailIcon from "@material-ui/icons/Mail";
-import NotificationsIcon from "@material-ui/icons/Notifications";
 import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { SearchBook } from "../../services/auth";
@@ -119,7 +117,6 @@ export default function Home() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const [timeout, setTimeout] = useState(0);
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("")
@@ -366,9 +363,9 @@ export default function Home() {
             <h1>Top Rated Books</h1>
             <hr/>
             <div className="books-list-container">
-              {topRatedBooks.map((item) => (
+              {topRatedBooks.map((item, index) => (
                 
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+                <ProfileBook key = {index} title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
               ))}
             </div>
           </div>
@@ -376,9 +373,9 @@ export default function Home() {
             <h1>Popupar Books</h1>
             <hr/>
             <div className="books-list-container">
-              {topPopularBooks.map((item) => (
+              {topPopularBooks.map((item, index) => (
                 
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
+                <ProfileBook key = {index} title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
               ))}
             </div>
           </div>

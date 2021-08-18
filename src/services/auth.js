@@ -1,8 +1,8 @@
 import Axios from "axios";
 
 
-const baseUrl = "https://bibliophile-react-django.herokuapp.com"
-// const baseUrl = "http://127.0.0.1:8000"
+// const baseUrl = "https://bibliophile-react-django.herokuapp.com"
+const baseUrl = "http://127.0.0.1:8000"
 
 let authToken = localStorage.getItem("bibliophile_token");
 let AuthStr = `Bearer ${authToken}`;
@@ -71,6 +71,17 @@ export const getProfileData = () => {
   return Axios({
     method: "get",
     url: `${baseUrl}/api/users/profile/`,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+export const getUserProfileData = (user_id) => {
+  return Axios({
+    method: "get",
+    url: `${baseUrl}/api/users/user_profile/${user_id}/`,
     headers: {
       accept: "application/json",
       Authorization: AuthStr,
@@ -169,10 +180,34 @@ export const getHomePageData = () => {
 };
 
 
+export const sendFriendRequest = (payload) => {
+  return Axios({
+    method: "post",
+    url: `${baseUrl}/api/users/friend_requests/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
 export const getFriendsData = () => {
   return Axios({
     method: "get",
     url: `${baseUrl}/api/users/friend_requests/`,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};
+
+export const updateFriendRequest = (payload) => {
+  return Axios({
+    method: "PUT",
+    url: `${baseUrl}/api/users/friend_requests/`,
+    data: payload,
     headers: {
       accept: "application/json",
       Authorization: AuthStr,

@@ -14,15 +14,7 @@ import shelflist_disable_img from "../Assets/shelf_disable.png";
 import readlist_img from "../Assets/readlist.png";
 import readlist_disable_img from "../Assets/readlist_disable.png";
 import "../css/book-info.css";
-import { Button } from "@material-ui/core";
 
-const defaultValues = {
-  first_name: "",
-  last_name: "",
-  phone: 0,
-  email: "",
-  description: "",
-};
 const BookInfoBox = (props) => {
   const book_id = props.match.params.book_id;
 
