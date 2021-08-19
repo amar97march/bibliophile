@@ -1,11 +1,9 @@
-.friend_section{
+.friend_section {
   text-align: center;
-  width: 100%
-
+  width: 100%;
 }
 
-
-.friend_section h3{
+.friend_section h3 {
   box-shadow: 0 4px 12px 0 rgb(0 0 0 / 5%);
   padding: 10px;
 }
@@ -13,9 +11,8 @@
 .friend_section .friend-subsection {
   margin: 5%;
 
-display: flex;
+  display: flex;
 }
-
 
 .friend_section .friend-subsection .friend-image {
   width: 20%;
@@ -23,81 +20,60 @@ display: flex;
   text-align: right;
   padding: 0px 20px;
   border-right: 5px solid #ffe17c;
-
 }
 
 .friend_section .friend-subsection .friend-form {
   width: 80%;
-  text-align:left;
+  text-align: left;
   padding: 20px 100px;
 }
 
-
-.friend_section .friend-subsection .friend-form .MuiGrid-align-items-xs-center{
+.friend_section .friend-subsection .friend-form .MuiGrid-align-items-xs-center {
   align-items: start;
 }
 
-@media (max-width: 767px) {
-  /* .friend_section {margin: auto;} */
-  .friend_section .friend-subsection {
-    display: block;
-    }
-  .friend_section .friend-subsection .friend-image{
-    text-align: center;
-    width: 100%;
-    border-right: none;
-    padding: 20px 20px 20px 20px;
-    border-bottom: 5px solid #ffe17c;
-  }
-
-  .friend_section .friend-subsection .friend-image img{
-    width: 100%;
-    height: auto;
-    /* padding: 5% */
-
-  }
-  .friend_section .friend-subsection .friend-form {
-    /* width: 100%; */
-    text-align:left;
-    /* padding: 20px 20px; */
-  }
-  .friend_section .friend-subsection .friend-form .MuiGrid-align-items-xs-center{
-    align-items: center;
-  }
-  }
-
-  .friend_section .friend-subsection .friend-form .MuiGrid-item{
-    margin: 20px 0px;
-  }
 
 
-  .friend_section .friend-subsection .friend-form .extra-section{
-    /* border-top: 2px solid #b4b4b4; */
-    margin: 20px 0px;
-  }
-
-  .friend_section .friend-subsection .friend-form .friends-list-container {
-    /* display: flex; */
-	/* flex-flow: row wrap; */
-	/* justify-content: center; */
-	margin: 5px 0;
+.friend_section .friend-subsection .friend-form .MuiGrid-item {
+  margin: 20px 0px;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section {
+.friend_section .friend-subsection .friend-form .extra-section {
+  /* border-top: 2px solid #b4b4b4; */
+  margin: 20px 0px;
+}
+
+.friend_section .friend-subsection .friend-form .friends-list-container {
+  /* display: flex; */
+  /* flex-flow: row wrap; */
+  /* justify-content: center; */
+  margin: 5px 0;
+}
+
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section {
   /* border: 1px solid #b8c8cc; */
   border-radius: 10px;
   margin: 2%;
   height: 100px;
   /* width: 150px; */
   border: 1px solid rgba(0, 0, 0, 0.041);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   padding: 2%;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container {
-    overflow: hidden;
-    
-    height:100%;
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container {
+  overflow: hidden;
+
+  height: 100%;
   /* border: 1px solid rgba(0, 0, 0, 0.103); */
   /* box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.1); */
   /* height: 100px; */
@@ -121,16 +97,32 @@ display: flex;
   justify-content: space-around;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .image-product-id {
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container
+  .image-product-id {
   margin: auto auto auto 2%;
   /* float: left; */
   height: 100%;
 }
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .image-product-id .image {
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container
+  .image-product-id
+  .image {
   height: 100%;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
   .friend-inner-section
   .container
   .image-product-id
@@ -139,7 +131,10 @@ display: flex;
   margin-bottom: 1px;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
   .friend-inner-section
   .container
   .image-product-id
@@ -150,7 +145,13 @@ display: flex;
   border: 1px solid #3333333a;
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info {
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container
+  .item-info {
   margin: 2% auto 2% auto;
   /* float: left; */
   color: rgba(0, 0, 0, 0.5);
@@ -159,13 +160,94 @@ display: flex;
   /* padding:0px 20px 0px 0px; */
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info .name {
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container
+  .item-info
+  .name {
   font-size: 16px;
   color: rgb(0, 0, 0);
 }
 
-.friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-price {
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section
+  .container
+  .item-price {
   margin: 5% 10px 2% auto;
   /* float: right; */
   /* height:20%; */
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 400px) {
+  .friend_section .friend-subsection .friend-image {
+    display: none;
+  }
+  .books-list-container .order-inner-product {
+    width: 135px;
+  }
+
+  .friend_section .friend-subsection .friend-form {
+    width: 100%;
+    padding: 20px 20px;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  
+}
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (max-width: 768px) {
+  .friend_section .friend-subsection .friend-image {
+    display: none;
+  }
+  .books-list-container .order-inner-product {
+    width: 135px;
+  }
+
+  .friend_section .friend-subsection .friend-form {
+    width: 100%;
+    padding: 20px 20px;
+  }
+  .friend_section .friend-subsection {
+    display: block;
+  }
+  .friend_section .friend-subsection .friend-image {
+    text-align: center;
+    width: 100%;
+    border-right: none;
+    padding: 20px 20px 20px 20px;
+    border-bottom: 5px solid #ffe17c;
+  }
+
+  .friend_section .friend-subsection .friend-image img {
+    width: 100%;
+    height: auto;
+    /* padding: 5% */
+  }
+  .friend_section .friend-subsection .friend-form {
+    /* width: 100%; */
+    text-align: left;
+    /* padding: 20px 20px; */
+  }
+  .friend_section
+    .friend-subsection
+    .friend-form
+    .MuiGrid-align-items-xs-center {
+    align-items: center;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (max-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (max-width: 1200px) {
 }

@@ -16,12 +16,6 @@ import { useHistory } from "react-router-dom";
 
 const ResetPassword = () => {
   let history = useHistory();
-  const paperStyle = {
-    padding: "30px 20px",
-    height: "580px",
-    width: 290,
-    margin: "0px auto",
-  };
   const [email, setEmail] = useState("")
   const [showResetSection, setShowResetSection] = useState({"display":"none"})
   const avatarStyle = { backgroundColor: "green" };
@@ -99,7 +93,7 @@ const validationSchemaReset = Yup.object().shape({
 
   return (
     <Grid>
-      <Paper style={paperStyle}>
+      <Paper className = "login-section" >
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <AddCircleOutlinedIcon />

@@ -18,12 +18,12 @@ const VerifyEmail = (props) => {
   const [displayButton, setDisplayButton] = useState({"display":"none"})
 
 
-  const paperStyle = {
-    padding: "30px 20px",
-    height: "580px",
-    width: 290,
-    margin: "0px auto",
-  };
+  // const paperStyle = {
+  //   padding: "30px 20px",
+  //   height: "580px",
+  //   width: 290,
+  //   margin: "0px auto",
+  // };
   const avatarStyle = { backgroundColor: "green" };
   const marginTop = { marginTop: 50 };
 
@@ -50,7 +50,7 @@ const VerifyEmail = (props) => {
 
   return (
     <Grid>
-      <Paper style={paperStyle}>
+      <Paper className = "login-section">
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <AddCircleOutlinedIcon />

@@ -1,16 +1,19 @@
-.books-list-container {
-  margin: 40px;
+@import url('https://fonts.googleapis.com/css2?family=Philosopher&display=swap');
+.extra-section h1 {
+  text-align: center;
+  font-family: 'Philosopher', sans-serif;
+  
 }
 
 .MuiAppBar-colorPrimary {
   color: #fff;
-  background-color: #313650 !important;
+  background-color: #59a2a2 !important;
 }
 
 .books-list-container {
   display: flex;
   flex-flow: row wrap;
-  /* justify-content: center; */
+  justify-content: center;
   margin: 5px 0;
 }
 
@@ -102,3 +105,19 @@
   justify-content: center;
   display: flex;
 }
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

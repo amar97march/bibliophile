@@ -120,6 +120,7 @@ export default function Home() {
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
   const [searchText, setSearchText] = useState("")
+  const [searchDataStatus, setSearchDataStatus] = useState(false)
   const [totalPages, setTotalPages] = useState(0)
   const [topRatedBooks, setTopRatedBooks] = useState([])
   const [topPopularBooks, setTopPopularBooks] = useState([])
@@ -161,6 +162,14 @@ export default function Home() {
   const searchTrigger = (event) => {
     var search_text = event.target.value; // this is the search text
     setSearchText(search_text)
+    
+    if ((searchText !== "" ) && (searchText !== null)){
+      setSearchDataStatus(true)
+    }
+    else{
+      setSearchDataStatus(false)
+    }
+    console.log("hhhhhhhhhhhhh", search_text);
     // if(timeout) clearTimeout(this.timeout);
     // timeout = setTimeout(() => {
     //search function
@@ -263,14 +272,14 @@ export default function Home() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
 
           <Typography className={classes.title} variant="h6" noWrap>
             Bibliophile
@@ -326,6 +335,7 @@ export default function Home() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+    {searchDataStatus && 
     <div className="books-list-container">
       {books.map((noteItem) => (
         <BookItem
@@ -352,13 +362,14 @@ export default function Home() {
         //     <br/>
         //     </div>
       ))}
-        </div>
+        </div>}
+        {searchDataStatus && 
       <Pagination
         count={totalPages}
         showFirstButton
         showLastButton
         onChange={handleChange}
-      />
+      /> }
       <div className = "extra-section">
             <h1>Top Rated Books</h1>
             <hr/>

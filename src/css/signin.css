@@ -1,3 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Barrio&display=swap');
+
+
+.login-register-container {
+  width : 330px !important;
+  margin: "20px auto"
+}
+
+
+.login-section {
+  padding: 30px 20px !important;
+  height: 580px !important;
+  width: 290px !important;
+  margin: 0px auto !important;
+}
+.SigninOutcontainer h1{
+  font-family: 'Barrio', cursive;
+}
+
+
 .SigninOutcontainer{
     display: flex;
   /* margin-top: 0px; */
@@ -12,3 +32,44 @@
 .MuiFormHelperText-root{
     color: red !important;
 }
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 400px) {
+  .login-section h2{
+    margin: 0px;
+  }
+  .login-section {
+    height: 300px !important;
+    width: 235px !important;
+    }
+    .login-register-container {
+      width : 280px !important;
+    }
+    .signup-tab {
+      overflow: auto;
+    }
+    .login-register-container .signup-btn{margin-bottom: 20px;}
+}
+
+
+@media only screen and (min-width: 400px) {
+  .login-section {
+  height: 540px !important;
+  width: 235px !important;
+  }
+  .login-register-container {
+    width : 280px !important;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}

@@ -26,7 +26,7 @@ const FriendPage= () => {
       <h3>Friends</h3>
       <div className="friend-subsection row">
         <div className="friend-image column">
-          
+          <h2>My Friends</h2>
         </div>
         <div className="friend-form column">
           <div className = "extra-section">

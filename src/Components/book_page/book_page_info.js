@@ -14,7 +14,7 @@ const BookInfo = (props) => {
         <div className = "reviews"><StarRatings
         rating={props.rating}
         starRatedColor = "yellow"
-        starDimension="40px"
+        // starDimension="40px"
         starSpacing="15px"
       />
       ( {props.totalReviews} )

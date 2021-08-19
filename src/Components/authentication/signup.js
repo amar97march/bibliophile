@@ -19,12 +19,12 @@ import { FormHelperText } from "@material-ui/core";
 import { signup } from "../../services/auth";
 
 const Signup = () => {
-  const paperStyle = {
-    padding: "30px 20px",
-    height: "580px",
-    width: 290,
-    margin: "0px auto",
-  };
+  // const paperStyle = {
+  //   padding: "30px 20px",
+  //   height: "580px",
+  //   width: 290,
+  //   margin: "0px auto",
+  // };
   const avatarStyle = { backgroundColor: "green" };
 //   const marginTop = { marginTop: 15 };
 
@@ -90,7 +90,7 @@ const Signup = () => {
 
   return (
     <Grid>
-      <Paper style={paperStyle}>
+      <Paper className = "login-section">
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <AddCircleOutlinedIcon />
@@ -173,7 +173,7 @@ const Signup = () => {
                 {" "}
                 <ErrorMessage name="termsAndConditions" />{" "}
               </FormHelperText>
-              <Button type="submit" disabled = {props.isSubmitting} variant="contained" color="primary">
+              <Button className = "signup-btn" type="submit" disabled = {props.isSubmitting} variant="contained" color="primary">
               {props.isSubmitting?"Signing in...":"Sign Up"}
               </Button>
             </Form>

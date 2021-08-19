@@ -16,7 +16,7 @@ const LoginRegisterContainer = () => {
         setValue(newValue);
     };
 
-    const paperStyle = {width : 330, margin: "20px auto"}
+    // const paperStyle = {width : 330, margin: "20px auto"}
 
     function TabPanel(props) {
         const { children, value, index, ...other } = props;
@@ -41,7 +41,7 @@ const LoginRegisterContainer = () => {
 
 
     return (
-        <Paper elevation = {20} style = {paperStyle}>
+        <Paper elevation = {20} className = "login-register-container">
             <Tabs
                 value={value}
                 indicatorColor="primary"
@@ -55,7 +55,7 @@ const LoginRegisterContainer = () => {
             <TabPanel value={value} index={0}>
                 <Login handleChange = {handleChange}/>
             </TabPanel>
-            <TabPanel value={value} index={1}>
+            <TabPanel className = "signup-tab" value={value} index={1}>
                 <Signup />
             </TabPanel>
         </Paper>

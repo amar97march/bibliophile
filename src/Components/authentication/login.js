@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom";
 
 const Login = ({ handleChange }) => {
     let history = useHistory();
-    const paperStyle = { padding: "30px 20px", height: '580px', width: 290, margin: '0px auto' }
+    // const paperStyle = { padding: "30px 20px", height: '580px', width: 290, margin: '0px auto' }
     const avatarStyle = { backgroundColor: "green" }
     const btstyle = { margin: "8px 0" }
     const initialValues = {
@@ -49,7 +49,7 @@ const Login = ({ handleChange }) => {
     return (
 
         <Grid>
-            <Paper style={paperStyle}>
+            <Paper className = "login-section">
                 <Grid align="center">
                     <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
                     <h2>Sign In</h2>
