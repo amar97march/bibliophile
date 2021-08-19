@@ -104,6 +104,8 @@ const Signup = () => {
           initialValues={initialValues}
           onSubmit={onSubmit}
           validationSchema={validationSchema}
+          validateOnChange={false}
+      validateOnBlur={false}
         >
           {(props) => (
             <Form>

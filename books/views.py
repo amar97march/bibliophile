@@ -8,6 +8,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 # from .helpers import send_otp_to_mobile
+from users.serializers import UserSerializer
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Q, Avg
 
@@ -59,11 +60,13 @@ class BookInfo(APIView):
             average_rating = all_reviews.aggregate(Avg('rating'))
             book_review = [{"rating":inst.rating,"comment":inst.comment, "user_id": inst.user.id, "user":inst.user.email, "timestamp":inst.updated_at} 
             for inst in all_reviews]
-
+            reading_users_list = [{"id": inst.id, "user": UserSerializer(inst.user).data} for inst in
+                         Readlist.objects.filter(book=book_obj, status=True)]
 
             data ={"reviews":book_review,"review_count":all_reviews.count(),
                    "average_rating": average_rating["rating__avg"] if average_rating["rating__avg"] else 0,
                    "wishlist_status":wishlist_status, "readlist_status":readlist_status,
+                   "reading_users":reading_users_list,
                    "shelflist_status":shelflist_status}
 
             return Response({"status":200, "data":data})

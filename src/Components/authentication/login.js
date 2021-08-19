@@ -54,7 +54,8 @@ const Login = ({ handleChange }) => {
                     <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
                     <h2>Sign In</h2>
                 </Grid>
-                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema}>
+                <Formik initialValues={initialValues} onSubmit={onSubmit} validationSchema={validationSchema} validateOnChange={false}
+   validateOnBlur={false}>
                     {(props) => (
                         <Form>
                             <Field as={TextField} label="Email"

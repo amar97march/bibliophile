@@ -13,6 +13,7 @@ import shelflist_img from "../Assets/shelf.png";
 import shelflist_disable_img from "../Assets/shelf_disable.png";
 import readlist_img from "../Assets/readlist.png";
 import readlist_disable_img from "../Assets/readlist_disable.png";
+import BookReaders from "../Components/book_page/book_readers";
 import "../css/book-info.css";
 
 const BookInfoBox = (props) => {
@@ -22,6 +23,7 @@ const BookInfoBox = (props) => {
   const [wishlistStatus, setWishlistStatus] = useState(false);
   const [readlistStatus, setReadlistStatus] = useState(false);
   const [shelflistStatus, setShelflistStatus] = useState(false);
+  const [readers, setReaders] = useState([]);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -154,6 +156,7 @@ const BookInfoBox = (props) => {
         setWishlistStatus(res.data.data.wishlist_status);
         setReadlistStatus(res.data.data.readlist_status);
         setShelflistStatus(res.data.data.shelflist_status);
+        setReaders(res.data.data.reading_users);
       })
       .catch((err) => {});
   };
@@ -201,6 +204,7 @@ const BookInfoBox = (props) => {
               >
                 <Tab label="Info" />
                 <Tab label="Reviews" />
+                <Tab label="Readers"></Tab>
               </Tabs>
               <TabPanel value={value} index={0}>
                 <BookInfo
@@ -218,6 +222,11 @@ const BookInfoBox = (props) => {
                   fetchItems={fetchItems}
                   bookId={book_id}
                   reviews={reviews}
+                />
+              </TabPanel>
+              <TabPanel value={value} index={2}>
+                <BookReaders
+                  friends = {readers}
                 />
               </TabPanel>
             </Paper>
