@@ -58,6 +58,7 @@ const BookInfoBox = (props) => {
     .then((res) => {
       if (res.data.status === true){
         setReadlistStatus(true)
+        fetchItems()
       }
       else {
         setReadlistStatus(false)
