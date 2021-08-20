@@ -153,7 +153,12 @@ export default function Home() {
       setTopPopularBooks(res.data.data.top_popular_books);
       setFriendRequestCount(res.data.data.friend_request_count);
     })
-    .catch((err) => {});
+    .catch((err) => {
+
+      if (err.response.status ===401){
+        history.push("/");
+      }
+    });
   }
 
   useEffect(

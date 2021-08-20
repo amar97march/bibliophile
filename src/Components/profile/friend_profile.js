@@ -5,10 +5,13 @@ import { getUserProfileData, sendFriendRequest } from "../../services/auth";
 import default_pic from "../../Assets/profile.jpeg";
 import ProfileBook from "./profile_book";
 import FriendsUser from "../friends/friend_user";
+import {useHistory} from 'react-router-dom';
 
 
 const UserProfile = (props) => {
   const user_id = props.match.params.user_id;
+
+  let history = useHistory();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -59,7 +62,11 @@ const UserProfile = (props) => {
         setReadlist(res.data.data.readlist_list);
         setFriends(res.data.data.friends);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        if (err.response.status === 401){
+          history.push("/");
+        }
+      });
   };
 
   const onAddFriendClick = () => {
@@ -74,6 +81,9 @@ const UserProfile = (props) => {
 
       })
       .catch((err) => {
+        if (err.response.status){
+          history.push("/")
+        }
         alert("Please try again later")
       });
     

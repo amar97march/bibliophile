@@ -14,11 +14,12 @@ import shelflist_disable_img from "../Assets/shelf_disable.png";
 import readlist_img from "../Assets/readlist.png";
 import readlist_disable_img from "../Assets/readlist_disable.png";
 import BookReaders from "../Components/book_page/book_readers";
+import {useHistory} from 'react-router-dom';
 import "../css/book-info.css";
 
 const BookInfoBox = (props) => {
   const book_id = props.match.params.book_id;
-
+  let history = useHistory();
   const [value, setValue] = useState(0);
   const [wishlistStatus, setWishlistStatus] = useState(false);
   const [readlistStatus, setReadlistStatus] = useState(false);
@@ -46,6 +47,9 @@ const BookInfoBox = (props) => {
       
     })
     .catch((err) => {
+      if (err.response.status === 401){
+        history.push("/");
+      }
       console.log("Wishlist not processed");
     });
 
@@ -58,16 +62,19 @@ const BookInfoBox = (props) => {
     .then((res) => {
       if (res.data.status === true){
         setReadlistStatus(true)
-        fetchItems()
       }
       else {
         setReadlistStatus(false)
+        
       }
-      
+      fetchItems()
       
       
     })
     .catch((err) => {
+      if (err.response.status){
+        history.push("/");
+      }
       console.log("Readlist not processed");
     });
 
@@ -89,6 +96,9 @@ const BookInfoBox = (props) => {
       
     })
     .catch((err) => {
+      if (err.response.status === 401){
+        history.push("/");
+      }
       console.log("Shelflist not processed");
     });
 
@@ -159,7 +169,12 @@ const BookInfoBox = (props) => {
         setShelflistStatus(res.data.data.shelflist_status);
         setReaders(res.data.data.reading_users);
       })
-      .catch((err) => {});
+      .catch((err) => {
+
+        if(err.response.status === 401){
+          history.push("/");
+        }
+      });
   };
 
   useEffect(fetchItems, [book_id]);

@@ -5,13 +5,14 @@ import Button from "@material-ui/core/Button";
 import "../../css/book-info.css";
 import { addBookReview } from "../../services/auth";
 import StarRatings from "react-star-ratings";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 // import profile_image from "../../Assets/profile.jpeg";
 
 const defaultValues = {
   review: "",
 };
 const BookReviews = (props) => {
+  let history = useHistory();
   const [formValues, setFormValues] = useState(defaultValues);
   const [rating, setRating] = useState(0);
   const handleInputChange = (e) => {
@@ -39,6 +40,9 @@ const BookReviews = (props) => {
         props.fetchItems()
       })
       .catch((err) => {
+        if (err.response.status){
+          history.push("/login/");
+        }
         alert("Please try again later");
       });
   };

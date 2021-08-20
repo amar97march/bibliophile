@@ -8,6 +8,7 @@ import { getProfileData, updateProfileData } from "../../services/auth";
 import default_pic from "../../Assets/profile.jpeg";
 import ProfileBook from "./profile_book";
 import FriendsUser from "../friends/friend_user";
+import {useHistory} from 'react-router-dom';
 
 const defaultValues = {
   first_name: "",
@@ -17,6 +18,7 @@ const defaultValues = {
   description: "",
 };
 const MyProfile = () => {
+  let history = useHistory();
   const [formValues, setFormValues] = useState(defaultValues);
   const [profilePicUrl, setProfilePicUrl] = useState(null);
   const [wishlist, setWishlist] = useState([]);
@@ -51,7 +53,11 @@ const MyProfile = () => {
         setReadlist(res.data.data.readlist_list);
         setFriends(res.data.data.friends);
       })
-      .catch((err) => {});
+      .catch((err) => {
+        if (err.response.status === 401){
+          history.push("/");
+        }
+      });
   };
 
   const handleSubmit = (event) => {
@@ -63,6 +69,9 @@ const MyProfile = () => {
         alert("Updated");
       })
       .catch((err) => {
+        if(err.response.status === 401){
+          history.push("/");
+        }
         alert("Please try again later");
       });
   };

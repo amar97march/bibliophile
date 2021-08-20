@@ -169,7 +169,7 @@ export const addShelflist = (payload) => {
 
 
 export const getHomePageData = () => {
-  return Axios({
+  const res =  Axios({
     method: "get",
     url: `${baseUrl}/api/users/home_page/`,
     headers: {
@@ -177,6 +177,8 @@ export const getHomePageData = () => {
       Authorization: AuthStr,
     },
   });
+  console.log(res);
+  return res
 };
 
 

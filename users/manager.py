@@ -1,6 +1,9 @@
+"""Custom user manager"""
 from django.contrib.auth.base_user import BaseUserManager
 
+
 class UserManager(BaseUserManager):
+    """Custom user manager class"""
     use_in_migrations = True
 
     def create_user(self, email, password = None, **extra_fields):
@@ -19,7 +22,6 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault('is_superuser', True)
         extra_fields.setdefault('is_active', True)
 
-    
         if extra_fields.get('is_staff') is not True:
             raise ValueError(_("Super user must have is_staff true"))
         

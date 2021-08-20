@@ -1,3 +1,4 @@
+""" Views for Users APIs """
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
@@ -12,11 +13,14 @@ from books.models import *
 import random
 # from django.core.cache import cache
 from django.db.models import Q, Count, Avg
+from django.core.mail import message, send_mail
 
 
 class RegisterView(APIView):
+    """Review view api"""
 
     def post(self, request):
+        """ User Creation API """
         try:
             serializer = UserSerializer(data=request.data)
 
@@ -33,10 +37,12 @@ class RegisterView(APIView):
 
 
 class UpdateProfile(APIView):
+    """  Update user api class """
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
+        """Update user details api"""
         try:
             profile_image = request.FILES.get('profile_image', None)
             user = request.user
@@ -56,7 +62,10 @@ class UpdateProfile(APIView):
 
 
 class VerifyOtp(APIView):
+    """Verify OTP url class"""
+
     def post(self, request):
+        """Ceerify by OTP method"""
         try:
             data = request.data
 
@@ -77,28 +86,25 @@ class VerifyOtp(APIView):
         return Response({"status": 404, "error": "something went wrong"}, status=status.HTTP_403_FORBIDDEN)
 
     def patch(self, request):
+        """Resend OTP and email method"""
         try:
             data = request.data
             user_obj = User.objects.filter(email=data.get('email'))
-            print("hello1")
             if not user_obj.exists():
                 return Response({"status": 404, "error": "non user found"}, status=status.HTTP_404_NOT_FOUND)
             user_obj = user_obj.first()
-            print("hello2")
             otp_status, time = send_otp_to_mobile(user_obj.phone, user_obj)
-            print("kkkkkk")
             if not otp_status:
-                return Response({"status": 403, "error": f"Try again after {time} seconds"}, status=status.HTTP_403_FORBIDDEN)
+                return Response({"status": 403, "error": f"Try again after {time} seconds"},
+                                status=status.HTTP_403_FORBIDDEN)
             email_token = uuid.uuid4()
-            print("hello3")
             subject = "Your email needs to be verifed"
-            message = f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://bibliophile-react-django.herokuapp.com/verify_email/{user_obj.email}/{email_token}/"
+            message = f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://" \
+                      f"bibliophile-react-django.herokuapp.com/verify_email/{user_obj.email}/{email_token}/"
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user_obj.email]
-            print("hello4")
             send_mail(subject, message, email_from, recipient_list)
             user_obj.email_token = email_token
-            print("hello5")
             user_obj.save()
             return Response({"status": 200, "message": "new otp sent"})
 
@@ -107,33 +113,39 @@ class VerifyOtp(APIView):
 
 
 class UserProfile(APIView):
+    """User data class"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        """User data fetch method"""
         user_data = User.objects.get(id=request.user.id)
         serializer = UserSerializer(user_data)
         data = serializer.data
         shelflist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                           "image_link": inst.book.image_link} for inst in Shelflist.objects.filter(user=user_data, status=True)]
-        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+                           "image_link": inst.book.image_link} for inst in
+                          Shelflist.objects.filter(user=user_data, status=True)]
+        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
+                          "image_link": inst.book.image_link} for inst in
                          Wishlist.objects.filter(user=user_data, status=True)]
-        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
+                          "image_link": inst.book.image_link} for inst in
                          Readlist.objects.filter(user=user_data, status=True)]
-        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
-                            Friends.objects.filter(receiver=request.user, accepted=True, status = True)]
+        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for
+                        obj in Friends.objects.filter(receiver=request.user, accepted=True, status=True)]
         friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                        Friends.objects.filter(sender=request.user, accepted=True, status = True)]
+                             Friends.objects.filter(sender=request.user, accepted=True, status=True)]
         friends_list.extend(friends_list_send)
         data["shelflist_list"] = shelflist_list
         data["wishlist_list"] = wishlist_list
         data["readlist_list"] = readlist_list
         data["friends"] = friends_list
-        data["profile_image"] = settings.ROOT_URL+'staticfiles/' + \
-            data['profile_image'] if data['profile_image'] else None
+        data["profile_image"] = settings.ROOT_URL + 'staticfiles/' + \
+                                data['profile_image'] if data['profile_image'] else None
         return Response({"status": 200, "data": data})
 
     def put(self, request):
+        """ Update user profile data"""
         user_data = User.objects.get(id=request.user.id)
         serializer = UserSerializer(
             request.user, data=request.data, partial=True)
@@ -145,28 +157,33 @@ class UserProfile(APIView):
 
 
 class FriendProfile(APIView):
+    """Different User Profile"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
+        """Other user profile data fetch"""
         user_data = User.objects.get(id=user_id)
         serializer = UserSerializer(user_data)
         data = serializer.data
         shelflist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                           "image_link": inst.book.image_link} for inst in Shelflist.objects.filter(user=user_data, status=True)]
-        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+                           "image_link": inst.book.image_link} for inst in
+                          Shelflist.objects.filter(user=user_data, status=True)]
+        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
+                          "image_link": inst.book.image_link} for inst in
                          Wishlist.objects.filter(user=user_data, status=True)]
-        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id, "image_link": inst.book.image_link} for inst in
+        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
+                          "image_link": inst.book.image_link} for inst in
                          Readlist.objects.filter(user=user_data, status=True)]
         friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
-                            Friends.objects.filter(receiver=user_data, accepted=True, status = True)]
+                        Friends.objects.filter(receiver=user_data, accepted=True, status=True)]
         friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                        Friends.objects.filter(sender=user_data, accepted=True, status = True)]
+                             Friends.objects.filter(sender=user_data, accepted=True, status=True)]
         friends_list.extend(friends_list_send)
-        request_obj = Friends.objects.filter(sender=request.user,receiver = user_data, status = True).first()
-        if request_obj and request_obj.accepted == True:
+        request_obj = Friends.objects.filter(sender=request.user, receiver=user_data, status=True).first()
+        if request_obj and request_obj.accepted:
             request_status = 2
-        elif request_obj and request_obj.accepted == False:
+        elif request_obj and not request_obj.accepted:
             request_status = 1
         elif int(user_id) == request.user.id:
             request_status = 4
@@ -177,16 +194,18 @@ class FriendProfile(APIView):
         data["wishlist_list"] = wishlist_list
         data["readlist_list"] = readlist_list
         data["friends"] = friends_list
-        data["profile_image"] = settings.ROOT_URL+'staticfiles/' + \
-            data['profile_image'] if data['profile_image'] else None
+        data["profile_image"] = settings.ROOT_URL + 'staticfiles/' + \
+                                data['profile_image'] if data['profile_image'] else None
         return Response({"status": 200, "data": data})
 
 
 class EmailVerification(APIView):
+    """Verify OTP by email class"""
     authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
+        """Verify email method"""
         try:
             data = request.data
 
@@ -207,14 +226,17 @@ class EmailVerification(APIView):
 
 
 class ResetPasswordEmailOTP(APIView):
+    """Reset password by email oto"""
     authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
+        """Send OTP and link to email"""
         try:
             user_data = User.objects.get(email=request.data.get("email"))
             # if cache.get(f"RESET-{user_data.email}"):
-            #     return Response({"status":403,  "error":f"Please retry after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
+            #     return Response({"status":403,  "error":f"Please retry
+            #     after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
             otp_to_sent = random.randint(1000, 9999)
             # cache.set(f"RESET-{user_data.email}", otp_to_sent, timeout=60)
             user_data.otp = otp_to_sent
@@ -230,12 +252,14 @@ class ResetPasswordEmailOTP(APIView):
         return Response({"status": 404, "error": "something went wrong"})
 
     def patch(self, request):
+        """Update password by email verification"""
         try:
             user_data = User.objects.get(email=request.data.get("email"))
             data = request.data
             new_password = data.get("newPassword", "")
             if not new_password or len(new_password) < 8:
-                return Response({"status": 403, "error": "password must be greater than 8 characters"}, status=status.HTTP_403_FORBIDDEN)
+                return Response({"status": 403, "error": "password must be greater than 8 characters"},
+                                status=status.HTTP_403_FORBIDDEN)
             otp = int(data.get("otp"))
             if int(user_data.otp) == otp:
                 user_data.set_password(new_password)
@@ -248,10 +272,12 @@ class ResetPasswordEmailOTP(APIView):
 
 
 class FriendRequest(APIView):
+    """User friends class"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
+        """Send request method"""
 
         user = request.user
         data = request.data
@@ -271,14 +297,15 @@ class FriendRequest(APIView):
             return Response({"status": 200, "message": "Friend request sent"})
 
     def get(self, request):
+        """Get friends method"""
 
         user = request.user
 
         try:
             friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
-                            Friends.objects.filter(receiver=user, accepted=True, status = True)]
+                            Friends.objects.filter(receiver=user, accepted=True, status=True)]
             friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                            Friends.objects.filter(sender=user, accepted=True, status = True)]
+                                 Friends.objects.filter(sender=user, accepted=True, status=True)]
             friends_list.extend(friends_list_send)
             pending_requests = [{"id": obj.id, "user": UserSerializer(
                 obj.sender).data} for obj in Friends.objects.filter(receiver=user, accepted=False)]
@@ -290,13 +317,14 @@ class FriendRequest(APIView):
         return Response({"status": 404, "error": "something went wrong"})
 
     def put(self, request):
+        """Accept of reject request method"""
 
         user = request.user
         data = request.data
 
         request_id = data.get('request_id')
         request_status = bool(data.get('status'))
-        friend_request_obj = Friends.objects.filter(receiver=user, id=request_id, status = True)
+        friend_request_obj = Friends.objects.filter(receiver=user, id=request_id, status=True)
         if not friend_request_obj.exists():
             return Response({"status": 403, "error": "Invalid friend request id"})
         else:
@@ -308,10 +336,12 @@ class FriendRequest(APIView):
 
 
 class HomePage(APIView):
+    """Home page url class"""
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        """Fetch user homepage details"""
 
         user = request.user
         data = request.data

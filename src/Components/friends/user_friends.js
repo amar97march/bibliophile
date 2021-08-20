@@ -3,8 +3,10 @@ import "../../css/friend-section.css";
 import { getFriendsData } from "../../services/auth";
 import FriendsUser from "./friend_user";
 import FriendsUserRequest from "./friend_user_request";
+import {useHistory} from 'react-router-dom';
 
 const FriendPage= () => {
+  let history = useHistory();
   const [pendingRequests, setPendingRequest] = useState([]);
   const [friends, setFriends] = useState([]);
 
@@ -14,7 +16,11 @@ const FriendPage= () => {
       setPendingRequest(res.data.data.pending)
       setFriends(res.data.data.friends)
     })
-    .catch((err) => {});
+    .catch((err) => {
+      if (err.response.status){
+        history.pushState("/");
+      }
+    });
   }
 
   useEffect(

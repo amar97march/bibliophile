@@ -1,3 +1,4 @@
+"""Admin section for books"""
 from django.contrib import admin
 
 

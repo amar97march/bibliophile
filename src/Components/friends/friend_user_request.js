@@ -4,8 +4,10 @@ import { Link } from "react-router-dom";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from "@material-ui/core";
 import { updateFriendRequest } from "../../services/auth";
+import {useHistory} from 'react-router-dom';
 
 const FriendsUserRequest = (props) => {
+  let history = useHistory();
 
   const onAcceptClick = () => {
     const payload = {"request_id":props.request_id,
@@ -18,6 +20,9 @@ const FriendsUserRequest = (props) => {
       
     })
     .catch((err) => {
+      if (err.response.status === 401){
+        history.push("/");
+      }
       alert("Please try again later")
     });
   }
@@ -32,6 +37,9 @@ const FriendsUserRequest = (props) => {
       props.fetchItems()
     })
     .catch((err) => {
+      if (err.response.status === 401){
+        history.push("/");
+      }
       alert("Please try again later")
     });
   }
