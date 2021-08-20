@@ -155,9 +155,9 @@ export default function Home() {
     })
     .catch((err) => {
 
-      if (err.response.status ===401){
-        history.push("/");
-      }
+      // if (err.response.status ===401){
+      //   history.push("/");
+      // }
     });
   }
 
