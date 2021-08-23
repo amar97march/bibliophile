@@ -6,7 +6,7 @@ const FriendsUser = (props) => {
 
 
   return (
-    <div className="friend-inner-section col-md-3 col-sm-4 col-6">
+    <div className="friend-inner-section">
       <Link
                     to={"/user_profile/"+props.user_id+"/"}
                   >

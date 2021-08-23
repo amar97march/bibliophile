@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'users',
     'books',
     'rest_framework_simplejwt',
+    'storages',
 ]
 
 MIDDLEWARE = [
@@ -198,17 +199,33 @@ SIMPLE_JWT = {
     'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
 }
 
-STATIC_URL = '/static/'
+# STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'build/static')
-]
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'build/static')
+# ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media/')
 MEDIA_URL = "/media/"
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+AWS_ACCESS_KEY_ID = 'AKIAYN5CE46KGUCJCUNS'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'bibliophile-assets'
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'static'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'build/static'),
+]
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_CUSTOM_DOMAIN, AWS_LOCATION)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 ROOT_URL = "https://bibliophile-react-django.herokuapp.com/"
@@ -222,3 +239,6 @@ options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
 
 CSRF_COOKIE_SECURE = False
+
+
+DEFAULT_FILE_STORAGE = 'bibliophile.storage_backends.MediaStorage'  # <-- here is where we reference it

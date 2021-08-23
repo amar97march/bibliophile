@@ -61,6 +61,26 @@ class UpdateProfile(APIView):
         return Response({'status': 404, 'error': 'something went wrong'})
 
 
+class UpdateProfilePicture(APIView):
+    """  Update user api class """
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+        """Update user details api"""
+        try:
+            profile_image = request.FILES.get('profile_image', None)
+            user = request.user
+            user_obj = User.objects.get(id=user.id)
+            if profile_image:
+                user_obj.profile_image = profile_image
+                user_obj.save()
+            return Response({'status': 200, 'message': 'User profile updated'})
+        except Exception as e:
+            print(e)
+        return Response({'status': 404, 'error': 'something went wrong'})
+
+
 class VerifyOtp(APIView):
     """Verify OTP url class"""
 
@@ -140,8 +160,7 @@ class UserProfile(APIView):
         data["wishlist_list"] = wishlist_list
         data["readlist_list"] = readlist_list
         data["friends"] = friends_list
-        data["profile_image"] = settings.ROOT_URL + 'staticfiles/' + \
-                                data['profile_image'] if data['profile_image'] else None
+        data["profile_image"] = user_data.profile_image.url if user_data.profile_image else None
         return Response({"status": 200, "data": data})
 
     def put(self, request):
@@ -180,7 +199,8 @@ class FriendProfile(APIView):
         friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
                              Friends.objects.filter(sender=user_data, accepted=True, status=True)]
         friends_list.extend(friends_list_send)
-        request_obj = Friends.objects.filter(sender=request.user, receiver=user_data, status=True).first()
+        request_obj = Friends.objects.filter(
+            sender=request.user, receiver=user_data, status=True).first()
         if request_obj and request_obj.accepted:
             request_status = 2
         elif request_obj and not request_obj.accepted:
@@ -195,7 +215,7 @@ class FriendProfile(APIView):
         data["readlist_list"] = readlist_list
         data["friends"] = friends_list
         data["profile_image"] = settings.ROOT_URL + 'staticfiles/' + \
-                                data['profile_image'] if data['profile_image'] else None
+            data['profile_image'] if data['profile_image'] else None
         return Response({"status": 200, "data": data})
 
 
@@ -324,7 +344,8 @@ class FriendRequest(APIView):
 
         request_id = data.get('request_id')
         request_status = bool(data.get('status'))
-        friend_request_obj = Friends.objects.filter(receiver=user, id=request_id, status=True)
+        friend_request_obj = Friends.objects.filter(
+            receiver=user, id=request_id, status=True)
         if not friend_request_obj.exists():
             return Response({"status": 403, "error": "Invalid friend request id"})
         else:
@@ -362,7 +383,9 @@ class HomePage(APIView):
             inst = Book.objects.get(id=book_id)
             top_popular_books.append(
                 {"title": inst.title, "unique_book_id": inst.unique_book_id, "image_link": inst.image_link})
-        # recommended_books =
+        recommended_books = Readlist.objects.filter(user = user, status = True)
+        readlist_authors = [obj.book.author for obj in recommended_books]
+        
         data = {"friend_request_count": friend_request_count,
                 "top_rating_books": top_rating_books,
                 "top_popular_books": top_popular_books

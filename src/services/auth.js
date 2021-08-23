@@ -216,3 +216,16 @@ export const updateFriendRequest = (payload) => {
     },
   });
 };
+
+
+export const updateProfilePicture = (payload) => {
+  return Axios({
+    method: "PATCH",
+    url: `${baseUrl}/api/users/update_picture_profile/`,
+    data: payload,
+    headers: {
+      accept: "application/json",
+      Authorization: AuthStr,
+    },
+  });
+};

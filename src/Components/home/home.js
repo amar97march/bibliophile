@@ -144,6 +144,11 @@ export default function Home() {
     history.push("/friends/")
   }
 
+  function logoutClick(event, data) {
+    localStorage.removeItem("bibliophile_token");
+    history.push("/");
+  }
+
   const fetchItems= ()=>{
     getHomePageData()
     .then((res) => {
@@ -236,7 +241,7 @@ export default function Home() {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleProfileMenuClick}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={logoutClick}>Log Out</MenuItem>
     </Menu>
   );
 
@@ -269,6 +274,17 @@ export default function Home() {
           <AccountCircle />
         </IconButton>
         <p>Profile</p>
+      </MenuItem>
+      <MenuItem onClick={logoutClick}>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <p>Log out</p>
       </MenuItem>
     </Menu>
   );

@@ -9,6 +9,8 @@ import default_pic from "../../Assets/profile.jpeg";
 import ProfileBook from "./profile_book";
 import FriendsUser from "../friends/friend_user";
 import {useHistory} from 'react-router-dom';
+import ImageCrop from "../../Containers/ImageCropper";
+import { updateProfilePicture } from "../../services/auth";
 
 const defaultValues = {
   first_name: "",
@@ -25,6 +27,8 @@ const MyProfile = () => {
   const [readlist, setReadlist] = useState([]);
   const [shelflist, setShelflist] = useState([]);
   const [friends, setFriends] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
+  // const [imageChangedFlag, setImageChangedFlag] = useState(false);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({
@@ -32,6 +36,39 @@ const MyProfile = () => {
       [name]: value,
     });
   };
+
+  function setCropUrlFunction(url) {
+    // setCropUrl(url);
+    // setImageChangedFlag(true);
+    let arr = url.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+
+    let imageCrop = new File([u8arr], "imagename", { type: mime });
+
+
+    // setCropUrlImage(imageCrop);
+    // updateDetails(imageCrop);
+    let form_data = new FormData();
+    
+      form_data.append("profile_image", imageCrop);
+      updateProfilePicture(form_data)
+
+      .then((res) => {
+        // setImageChangedFlag(false);
+        fetchItems()
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("Details not saved. Contact Admin")
+      });
+  }
 
   const fetchItems = () => {
     getProfileData()
@@ -87,6 +124,15 @@ const MyProfile = () => {
             src={profilePicUrl ? profilePicUrl : default_pic}
             alt="Profile"
           />
+          <Button variant="primary" onClick={() => setModalShow(true)}>
+              Upload Image
+            </Button>
+            <ImageCrop
+              aspectRatio = {1}
+              show={modalShow}
+              onHide={() => setModalShow(false)}
+              setCropUrl={setCropUrlFunction}
+            />
         </div>
         <div className="profile-form column">
           <form onSubmit={handleSubmit}>
