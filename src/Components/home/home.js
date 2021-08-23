@@ -264,7 +264,7 @@ export default function Home() {
         </IconButton>
         <p>Friends</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem onClick={handleProfileMenuClick}>
         <IconButton
           aria-label="account of current user"
           aria-controls="primary-search-account-menu"

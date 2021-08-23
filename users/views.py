@@ -214,8 +214,7 @@ class FriendProfile(APIView):
         data["wishlist_list"] = wishlist_list
         data["readlist_list"] = readlist_list
         data["friends"] = friends_list
-        data["profile_image"] = settings.ROOT_URL + 'staticfiles/' + \
-            data['profile_image'] if data['profile_image'] else None
+        data["profile_image"] = user_data.profile_image.url if user_data.profile_image else None
         return Response({"status": 200, "data": data})
 
 
