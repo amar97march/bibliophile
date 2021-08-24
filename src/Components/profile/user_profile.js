@@ -125,7 +125,7 @@ const MyProfile = () => {
             alt="Profile"
           />
           <Button variant="primary" onClick={() => setModalShow(true)}>
-              Upload Image
+              Update picture
             </Button>
             <ImageCrop
               aspectRatio = {1}
