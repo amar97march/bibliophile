@@ -1,2 +1,2 @@
 release: python backend/manage.py migrate
-web: gunicorn backend.bibliophile.wsgi --log-file -
+web: gunicorn bibliophile.wsgi --log-file -
