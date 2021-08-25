@@ -1,9 +1,0 @@
-asgiref==3.4.1
-Django==3.2.6
-django-filter==2.4.0
-django-redis==5.0.0
-djangorestframework==3.12.4
-Markdown==3.3.4
-pytz==2021.1
-redis==3.5.3
-sqlparse==0.4.1
