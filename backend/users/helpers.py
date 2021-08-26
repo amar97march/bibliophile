@@ -4,7 +4,7 @@ import logging
 from django.core.mail import message, send_mail
 import uuid
 from django.conf import settings
-from apps.books.models import *
+from books.models import *
 from .models import *
 from .serializers import *
 from django.db.models import Q, Count, Avg

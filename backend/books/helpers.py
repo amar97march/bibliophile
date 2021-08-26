@@ -1,6 +1,6 @@
 from .models import *
 from django.db.models import Q, Avg
-from apps.users.serializers import UserSerializer
+from users.serializers import UserSerializer
 
 def get_book_data(book_obj, user):
     wishlist_obj = Wishlist.objects.filter(book=book_obj, user=user).first()

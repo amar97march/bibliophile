@@ -12,7 +12,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .helpers import send_otp_to_mobile, user_profile_pic_update, send_email_token,\
     friend_profile_data, user_profile_data, get_homepage_data
 from rest_framework_simplejwt.tokens import RefreshToken
-from apps.books.models import *
+from books.models import *
 import random
 # from django.core.cache import cache
 from django.core.mail import message, send_mail
