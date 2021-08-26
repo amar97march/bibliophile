@@ -26,10 +26,10 @@
     "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "cd bibliophile_web react-scripts start",
-    "build": "cd bibliophile_web react-scripts build",
-    "test": "cd bibliophile_web react-scripts test",
-    "eject": "cd bibliophile_web react-scripts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
