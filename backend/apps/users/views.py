@@ -2,39 +2,45 @@
 from rest_framework.response import Response
 from .models import *
 from .serializers import *
-import uuid
+
 from rest_framework import status
+from rest_framework.generics import GenericAPIView
+from rest_framework.mixins import CreateModelMixin
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from .helpers import send_otp_to_mobile
+from .helpers import send_otp_to_mobile, user_profile_pic_update, send_email_token,\
+    friend_profile_data, user_profile_data, get_homepage_data
 from rest_framework_simplejwt.tokens import RefreshToken
 from apps.books.models import *
 import random
 # from django.core.cache import cache
-from django.db.models import Q, Count, Avg
 from django.core.mail import message, send_mail
 import logging
 
 
-class RegisterView(APIView):
+class RegisterView(CreateModelMixin, GenericAPIView):
     """Review view api"""
 
-    def post(self, request):
-        """ User Creation API """
-        try:
-            serializer = UserSerializer(data=request.data)
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-            if not serializer.is_valid():
-                return Response({
-                    'status': 403,
-                    'errors': serializer.errors
-                }, status=status.HTTP_403_FORBIDDEN)
-            serializer.save()
-            return Response({'status': 200, 'message': 'An email OTP sent on your number and email'})
-        except Exception as e:
-            logging.error(e)
-            return Response({'status': 404, 'error': 'something went wrong'})
+    def post(self, request, *args, **kwargs):
+        """ User Creation API """
+        return self.create(request, *args, **kwargs)
+        # try:
+        #     serializer = UserSerializer(data=request.data)
+        #
+        #     if not serializer.is_valid():
+        #         return Response({
+        #             'status': 403,
+        #             'errors': serializer.errors
+        #         }, status=status.HTTP_403_FORBIDDEN)
+        #     serializer.save()
+        #     return Response({'status': 200, 'message': 'An email OTP sent on your number and email'})
+        # except Exception as e:
+        #     logging.error(e)
+        #     return Response({'status': 404, 'error': 'something went wrong'})
 
 
 class UpdateProfile(APIView):
@@ -53,9 +59,9 @@ class UpdateProfile(APIView):
             if not serializer.is_valid():
                 return Response({'status': 404, 'error': random.serializer.errors})
             serializer.save()
+            
             if profile_image:
-                user_obj.profile_image = profile_image
-                user_obj.save()
+                user_profile_pic_update(user_obj, profile_image)
             return Response({'status': 200, 'message': 'User profile updated'})
         except Exception as e:
             logging.error(e)
@@ -74,8 +80,7 @@ class UpdateProfilePicture(APIView):
             user = request.user
             user_obj = User.objects.get(id=user.id)
             if profile_image:
-                user_obj.profile_image = profile_image
-                user_obj.save()
+                user_profile_pic_update(user_obj, profile_image)
             return Response({'status': 200, 'message': 'User profile updated'})
         except Exception as e:
             logging.error(e)
@@ -118,13 +123,7 @@ class VerifyOtp(APIView):
             if not otp_status:
                 return Response({"status": 403, "error": f"Try again after {time} seconds"},
                                 status=status.HTTP_403_FORBIDDEN)
-            email_token = uuid.uuid4()
-            subject = "Your email needs to be verifed"
-            message = f"Hi, Your OTP is {user_obj.otp}, Or click on the link to verify email https://" \
-                      f"bibliophile-react-django.herokuapp.com/verify_email/{user_obj.email}/{email_token}/"
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [user_obj.email]
-            send_mail(subject, message, email_from, recipient_list)
+            email_token = send_email_token(user_obj)
             user_obj.email_token = email_token
             user_obj.save()
             return Response({"status": 200, "message": "new otp sent"})
@@ -143,25 +142,7 @@ class UserProfile(APIView):
         user_data = User.objects.get(id=request.user.id)
         serializer = UserSerializer(user_data)
         data = serializer.data
-        shelflist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                           "image_link": inst.book.image_link} for inst in
-                          Shelflist.objects.filter(user=user_data, status=True)]
-        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                          "image_link": inst.book.image_link} for inst in
-                         Wishlist.objects.filter(user=user_data, status=True)]
-        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                          "image_link": inst.book.image_link} for inst in
-                         Readlist.objects.filter(user=user_data, status=True)]
-        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for
-                        obj in Friends.objects.filter(receiver=request.user, accepted=True, status=True)]
-        friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                             Friends.objects.filter(sender=request.user, accepted=True, status=True)]
-        friends_list.extend(friends_list_send)
-        data["shelflist_list"] = shelflist_list
-        data["wishlist_list"] = wishlist_list
-        data["readlist_list"] = readlist_list
-        data["friends"] = friends_list
-        data["profile_image"] = user_data.profile_image.url if user_data.profile_image else None
+        data = user_profile_data(user_data, data,request)
         return Response({"status": 200, "data": data})
 
     def put(self, request):
@@ -186,36 +167,7 @@ class FriendProfile(APIView):
         user_data = User.objects.get(id=user_id)
         serializer = UserSerializer(user_data)
         data = serializer.data
-        shelflist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                           "image_link": inst.book.image_link} for inst in
-                          Shelflist.objects.filter(user=user_data, status=True)]
-        wishlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                          "image_link": inst.book.image_link} for inst in
-                         Wishlist.objects.filter(user=user_data, status=True)]
-        readlist_list = [{"title": inst.book.title, "unique_book_id": inst.book.unique_book_id,
-                          "image_link": inst.book.image_link} for inst in
-                         Readlist.objects.filter(user=user_data, status=True)]
-        friends_list = [{"id": obj.id, "user": UserSerializer(obj.sender).data} for obj in
-                        Friends.objects.filter(receiver=user_data, accepted=True, status=True)]
-        friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
-                             Friends.objects.filter(sender=user_data, accepted=True, status=True)]
-        friends_list.extend(friends_list_send)
-        request_obj = Friends.objects.filter(
-            sender=request.user, receiver=user_data, status=True).first()
-        if request_obj and request_obj.accepted:
-            request_status = 2
-        elif request_obj and not request_obj.accepted:
-            request_status = 1
-        elif int(user_id) == request.user.id:
-            request_status = 4
-        else:
-            request_status = 0
-        data["request_status"] = request_status
-        data["shelflist_list"] = shelflist_list
-        data["wishlist_list"] = wishlist_list
-        data["readlist_list"] = readlist_list
-        data["friends"] = friends_list
-        data["profile_image"] = user_data.profile_image.url if user_data.profile_image else None
+        data = friend_profile_data(user_data, data, request)
         return Response({"status": 200, "data": data})
 
 
@@ -366,28 +318,6 @@ class HomePage(APIView):
 
         user = request.user
         data = request.data
-        friend_request_count = Friends.objects.filter(
-            receiver=user, accepted=False).count()
-        top_rating_books_query = [x["book"] for x in BookReview.objects.all().values(
-            "book").annotate(total=Avg('rating')).order_by('-total')[:10]]
-        top_rating_books = []
-        for book_id in top_rating_books_query:
-            inst = Book.objects.get(id=book_id)
-            top_rating_books.append(
-                {"title": inst.title, "unique_book_id": inst.unique_book_id, "image_link": inst.image_link})
-
-        top_popular_books_query = [x["book"] for x in Readlist.objects.all().values(
-            "book").annotate(total=Count('book')).order_by('-total')][:10]
-        top_popular_books = []
-        for book_id in top_popular_books_query:
-            inst = Book.objects.get(id=book_id)
-            top_popular_books.append(
-                {"title": inst.title, "unique_book_id": inst.unique_book_id, "image_link": inst.image_link})
-        recommended_books = Readlist.objects.filter(user = user, status = True)
-        readlist_authors = [obj.book.author for obj in recommended_books]
+        data = get_homepage_data(user)
         
-        data = {"friend_request_count": friend_request_count,
-                "top_rating_books": top_rating_books,
-                "top_popular_books": top_popular_books
-                }
         return Response({"status": 200, "data": data})
