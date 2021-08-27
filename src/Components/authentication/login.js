@@ -5,7 +5,7 @@ import { Grid, Paper, Avatar, TextField, Button, Typography, Link } from '@mater
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import { signin, saveTokenToLocalstorage } from "../../services/auth";
+import { signin, saveTokenToLocalstorage, updateProfileData } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import UserPool from "../../services/UserPool";
 import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
@@ -26,7 +26,44 @@ const Login = ({ handleChange }) => {
     })
 
 
-    const onSubmit = (values, props) => {
+    const get_userData = async (user)=>{
+        await user.getUserData(function(err, userData) {
+            if (err) {
+                alert(err.message || JSON.stringify(err));
+                return;
+            }
+            var data = {}
+            console.log('User data for user ' + userData["UserAttributes"]);
+            userData["UserAttributes"].forEach(function (arrayItem){
+                data[arrayItem["Name"]] = arrayItem["Value"]
+            })
+
+            const formValues = {
+                first_name: data["given_name"],
+                last_name: data["family_name"],
+                // phone: 0,
+                email: data["email"],
+                // description: "",
+            }
+            console.log(formValues);
+            
+            updateProfileData(formValues)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                
+            });
+
+        },
+        { bypassCache: true })
+            
+        
+
+    }
+
+
+    const onSubmit = async (values, props) => {
         const user = new CognitoUser({
             Username: values["email"],
             Pool: UserPool
@@ -40,11 +77,11 @@ const Login = ({ handleChange }) => {
 
             onSuccess: data => {
                 console.log("onSucess:", data);
-                // saveTokenToLocalstorage(res.data.access);
-                // console.log(res);
-                console.log(data["accessToken"]["jwtToken"]);
+                saveTokenToLocalstorage(data["accessToken"]["jwtToken"]);
                 props.resetForm()
                 props.setSubmitting(false)
+                get_userData(user)
+                
                 history.push("/home/");
             },
             onFailure: err => {

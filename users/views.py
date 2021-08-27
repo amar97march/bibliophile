@@ -134,7 +134,7 @@ class VerifyOtp(APIView):
 
 class UserProfile(APIView):
     """User data class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

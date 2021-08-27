@@ -102,6 +102,9 @@ const Signup = () => {
 
     UserPool.signUp(values["email"],values["password"],[{"Name":"given_name","Value":values["firstName"]},{"Name":"family_name","Value":values["lastName"]},{"Name":"gender","Value":"Male"}],null,(err, data) => {
       props.setSubmitting(false);
+        console.log(err,data);
+
+
           })
     // const payload = {
     //   email: values["email"],
