@@ -11,14 +11,14 @@ import Menu from "@material-ui/core/Menu";
 import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
-import PeopleAltIcon from '@material-ui/icons/PeopleAlt';
+import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { SearchBook } from "../../services/auth";
 import Pagination from "@material-ui/lab/Pagination";
-import '../../css/home.css'
+import "../../css/home.css";
 import { useHistory, Link } from "react-router-dom";
 import { getHomePageData } from "../../services/auth";
-import BookNA from "../../Assets/book_na.jpg"
+import BookNA from "../../Assets/book_na.jpg";
 import ProfileBook from "../profile/profile_book";
 
 const useStyles = makeStyles((theme) => ({
@@ -85,16 +85,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
 function BookItem(props) {
   return (
     <div className="order-inner-product col-md-3 col-sm-4 col-6">
       <div className="container">
         <div className="image-product-id">
-          <Link
-            to={"/book_info/"+props.productId}
-          >
+          <Link to={"/book_info/" + props.productId}>
             <div className="image">
               <img className="img-item" src={props.image} alt="" />
             </div>
@@ -106,7 +102,9 @@ function BookItem(props) {
           <div className="size">Page Count: {props.pageCount}</div>
         </div>
         <div className="item-price">
-          <div>Price: {props.price} {props.currency}</div>
+          <div>
+            Price: {props.price} {props.currency}
+          </div>
         </div>
       </div>
     </div>
@@ -119,67 +117,63 @@ export default function Home() {
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [books, setBooks] = useState([]);
   const [page, setPage] = useState(1);
-  const [searchText, setSearchText] = useState("")
-  const [searchDataStatus, setSearchDataStatus] = useState(false)
-  const [totalPages, setTotalPages] = useState(0)
-  const [topRatedBooks, setTopRatedBooks] = useState([])
-  const [topPopularBooks, setTopPopularBooks] = useState([])
-  const [friendRequestCount, setFriendRequestCount] = useState(0)
-  let history = useHistory()
+  const [searchText, setSearchText] = useState("");
+  const [searchDataStatus, setSearchDataStatus] = useState(false);
+  const [totalPages, setTotalPages] = useState(0);
+  const [topRatedBooks, setTopRatedBooks] = useState([]);
+  const [recommendedBooks, setRecommendedBooks] = useState([]);
+  const [topPopularBooks, setTopPopularBooks] = useState([]);
+  const [friendRequestCount, setFriendRequestCount] = useState(0);
+  let history = useHistory();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
-    
-
   };
 
   const handleProfileMenuClick = () => {
-    history.push("/profile/")
-  }
+    history.push("/profile/");
+  };
 
   const handleFreindMenuOpen = () => {
-    history.push("/friends/")
-  }
+    history.push("/friends/");
+  };
 
   function logoutClick(event, data) {
     localStorage.removeItem("bibliophile_token");
     history.push("/");
   }
 
-  const fetchItems= ()=>{
+  const fetchItems = () => {
     getHomePageData()
-    .then((res) => {
-      console.log(res);
+      .then((res) => {
+        console.log(res);
 
-      setTopRatedBooks(res.data.data.top_rating_books);
-      setTopPopularBooks(res.data.data.top_popular_books);
-      setFriendRequestCount(res.data.data.friend_request_count);
-    })
-    .catch((err) => {
+        setTopRatedBooks(res.data.data.top_rating_books);
+        setTopPopularBooks(res.data.data.top_popular_books);
+        setFriendRequestCount(res.data.data.friend_request_count);
+        setRecommendedBooks(res.data.data.recommended_books);
+      })
+      .catch((err) => {
+        // if (err.response.status ===401){
+        //   history.push("/");
+        // }
+      });
+  };
 
-      // if (err.response.status ===401){
-      //   history.push("/");
-      // }
-    });
-  }
-
-  useEffect(
-    fetchItems, []);
+  useEffect(fetchItems, []);
 
   const searchTrigger = (event) => {
     var search_text = event.target.value; // this is the search text
-    setSearchText(search_text)
-    
-    if ((searchText !== "" ) && (searchText !== null)){
-      setSearchDataStatus(true)
+    setSearchText(search_text);
+
+    if (searchText !== "" && searchText !== null) {
+      setSearchDataStatus(true);
+    } else {
+      setSearchDataStatus(false);
     }
-    else{
-      setSearchDataStatus(false)
-    }
-    console.log("hhhhhhhhhhhhh", search_text);
     // if(timeout) clearTimeout(this.timeout);
     // timeout = setTimeout(() => {
     //search function
@@ -187,24 +181,21 @@ export default function Home() {
     SearchBook(search_text, page)
       .then((res) => {
         console.log(res);
-        if (res.data.totalItems % 10 > 0){
-            setTotalPages(Math.floor((res.data.totalItems/10)+1))
+        if (res.data.totalItems % 10 > 0) {
+          setTotalPages(Math.floor(res.data.totalItems / 10 + 1));
+        } else {
+          setTotalPages(Math.floor(res.data.totalItems / 10));
         }
-        else{
-        setTotalPages(Math.floor(res.data.totalItems/10))
-        }
-        if (res.data.totalItems > 0){
-        setBooks(res.data.items);
-        }
-        else{
-            setBooks([]);
+        if (res.data.totalItems > 0) {
+          setBooks(res.data.items);
+        } else {
+          setBooks([]);
         }
       })
       .catch((err) => {});
     // }, 300);
     console.log(event.target.value);
   };
-
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -324,7 +315,11 @@ export default function Home() {
           <div className={classes.grow} />
 
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show new freind requests" onClick={handleFreindMenuOpen} color="inherit">
+            <IconButton
+              aria-label="show new freind requests"
+              onClick={handleFreindMenuOpen}
+              color="inherit"
+            >
               <Badge badgeContent={friendRequestCount} color="secondary">
                 <PeopleAltIcon />
               </Badge>
@@ -356,71 +351,103 @@ export default function Home() {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
-    {searchDataStatus && 
-    <div className="books-list-container">
-      {books.map((noteItem) => (
-        <BookItem
-        key={noteItem.id}
-        productId = {noteItem.id}
-        image={noteItem.volumeInfo.imageLinks ? noteItem.volumeInfo.imageLinks.thumbnail:BookNA}
-        title={(noteItem.volumeInfo.title.length < 24)?noteItem.volumeInfo.title:noteItem.volumeInfo.title.substring(0,25)+"..."}
-        author = {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}
-        pageCount = {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}
-        description = {noteItem.volumeInfo.description}
-        price = {noteItem.saleInfo.retailPrice ? noteItem.saleInfo.retailPrice.amount:"NA"}
-        currency = {noteItem.saleInfo.retailPrice ? noteItem.saleInfo.retailPrice.currencyCode:""}
-      />
-        // <div>
-        //     <div>Id: {noteItem.id}</div>
-        //     <div>Title: {noteItem.volumeInfo.title}</div>
-        //     <div>Author: {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}</div>
-        //     <div>Publisher: {noteItem.publisher}</div>
-        //     <div>Description: {noteItem.description}</div>
-        //     <div>Page Count: {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}</div>
-        //     <img src = {noteItem.volumeInfo.imageLinks && noteItem.volumeInfo.imageLinks.thumbnail} alt = "Book cover"/>
-        //     <br/>
-        //     <br/>
-        //     <br/>
-        //     </div>
-      ))}
-        </div>}
-        {searchDataStatus && 
-      <Pagination
-        count={totalPages}
-        showFirstButton
-        showLastButton
-        onChange={handleChange}
-      /> }
-      <div className = "extra-section">
-            <h1>Top Rated Books</h1>
-            <hr/>
-            <div className="books-list-container">
-              {topRatedBooks.map((item, index) => (
-                
-                <ProfileBook key = {index} title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
-              ))}
-            </div>
-          </div>
-          <div className = "extra-section">
-            <h1>Popupar Books</h1>
-            <hr/>
-            <div className="books-list-container">
-              {topPopularBooks.map((item, index) => (
-                
-                <ProfileBook key = {index} title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
-              ))}
-            </div>
-          </div>
-          {/* <div className = "extra-section">
-            <h1>Top Rated Books</h1>
-            <hr/>
-            <div className="books-list-container">
-              {topRatedBooks.map((item) => (
-                
-                <ProfileBook title = {item.title} image_link = {item.image_link} unique_book_id = {item.unique_book_id}/>
-              ))}
-            </div>
-          </div> */}
+      {searchDataStatus && (
+        <div className="books-list-container">
+          {books.map((noteItem) => (
+            <BookItem
+              key={noteItem.id}
+              productId={noteItem.id}
+              image={
+                noteItem.volumeInfo.imageLinks
+                  ? noteItem.volumeInfo.imageLinks.thumbnail
+                  : BookNA
+              }
+              title={
+                noteItem.volumeInfo.title.length < 24
+                  ? noteItem.volumeInfo.title
+                  : noteItem.volumeInfo.title.substring(0, 25) + "..."
+              }
+              author={
+                noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]
+              }
+              pageCount={noteItem.volumeInfo && noteItem.volumeInfo.pageCount}
+              description={noteItem.volumeInfo.description}
+              price={
+                noteItem.saleInfo.retailPrice
+                  ? noteItem.saleInfo.retailPrice.amount
+                  : "NA"
+              }
+              currency={
+                noteItem.saleInfo.retailPrice
+                  ? noteItem.saleInfo.retailPrice.currencyCode
+                  : ""
+              }
+            />
+            // <div>
+            //     <div>Id: {noteItem.id}</div>
+            //     <div>Title: {noteItem.volumeInfo.title}</div>
+            //     <div>Author: {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}</div>
+            //     <div>Publisher: {noteItem.publisher}</div>
+            //     <div>Description: {noteItem.description}</div>
+            //     <div>Page Count: {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}</div>
+            //     <img src = {noteItem.volumeInfo.imageLinks && noteItem.volumeInfo.imageLinks.thumbnail} alt = "Book cover"/>
+            //     <br/>
+            //     <br/>
+            //     <br/>
+            //     </div>
+          ))}
+        </div>
+      )}
+      {searchDataStatus && (
+        <Pagination
+          count={totalPages}
+          showFirstButton
+          showLastButton
+          onChange={handleChange}
+        />
+      )}
+      <div className="extra-section">
+        <h1>Top Rated Books</h1>
+        <hr />
+        <div className="books-list-container">
+          {topRatedBooks.map((item, index) => (
+            <ProfileBook
+              key={index}
+              title={item.title}
+              image_link={item.image_link}
+              unique_book_id={item.unique_book_id}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="extra-section">
+        <h1>Popupar Books</h1>
+        <hr />
+        <div className="books-list-container">
+          {topPopularBooks.map((item, index) => (
+            <ProfileBook
+              key={index}
+              title={item.title}
+              image_link={item.image_link}
+              unique_book_id={item.unique_book_id}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="extra-section">
+        <h1>recommended Books</h1>
+        <hr />
+        <div className="books-list-container">
+          {recommendedBooks.map((item, index) => (
+            <ProfileBook
+              key={index}
+              title={item.title}
+              image_link={item.image_link}
+              unique_book_id={item.unique_book_id}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

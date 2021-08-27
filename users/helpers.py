@@ -112,9 +112,14 @@ def get_homepage_data(user):
             {"title": inst.title, "unique_book_id": inst.unique_book_id, "image_link": inst.image_link})
     recommended_books = Readlist.objects.filter(user = user, status = True)
     readlist_authors = [obj.book.author for obj in recommended_books]
+    readlist_languages = [obj.book.language for obj in recommended_books]
+    recommended_books_list = [{"title": inst.title, "unique_book_id": inst.unique_book_id, "image_link": inst.image_link} for
+                                 inst in Book.objects.filter(Q(language__in = readlist_languages) |  Q(author__in =readlist_authors))]
+
     
     data = {"friend_request_count": friend_request_count,
             "top_rating_books": top_rating_books,
-            "top_popular_books": top_popular_books
+            "top_popular_books": top_popular_books,
+            "recommended_books":recommended_books_list
             }
     return data
