@@ -58,7 +58,7 @@ def friend_profile_data(user_data, data, request):
             request_status = 2
         elif request_obj and not request_obj.accepted:
             request_status = 1
-        elif int(user_data.user_id) == request.user.id:
+        elif int(user_data.id) == request.user.id:
             request_status = 4
         else:
             request_status = 0

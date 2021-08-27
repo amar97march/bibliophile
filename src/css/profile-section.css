@@ -31,11 +31,24 @@ display: flex;
   border-right: 5px solid #ffe17c;
 
 }
+.profile_section .profile-subsection .profile-image img{
+  max-width: 200px;
+  border-radius: 100%;
+}
 
 .profile_section .profile-subsection .profile-form {
   width: 80%;
   text-align:left;
   padding: 20px 100px;
+}
+.profile_section .profile-subsection .user-info{
+  background: white;
+  padding: 20px;
+}
+
+.profile_section .profile-subsection .profile-form form{
+  background: white;
+  padding: 33px;
 }
 
 
@@ -58,6 +71,7 @@ display: flex;
 
   .profile_section .profile-subsection .profile-image img{
     width: 100%;
+    
     height: auto;
     border-radius: 100%;
     border: 1px solid #c7c7c7
@@ -68,6 +82,9 @@ display: flex;
     text-align:left;
     /* padding: 20px 20px; */
   }
+
+  
+
   .profile_section .profile-subsection .profile-form .MuiGrid-align-items-xs-center{
     align-items: center;
   }

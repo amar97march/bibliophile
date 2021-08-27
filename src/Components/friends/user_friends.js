@@ -29,7 +29,7 @@ const FriendPage= () => {
 
   return (
     <div className="friend_section">
-      <h3>Friends</h3>
+      <h3 className = "nav-heading">Friends</h3>
       <div className="friend-subsection row">
         <div className="friend-image column">
           <h2>My Friends</h2>

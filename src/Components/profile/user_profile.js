@@ -117,7 +117,7 @@ const MyProfile = () => {
 
   return (
     <div className="profile_section">
-      <h3>Profile</h3>
+      <h3 className = "nav-heading">Profile</h3>
       <div className="profile-subsection row">
         <div className="profile-image column">
           <img
