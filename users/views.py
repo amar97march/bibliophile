@@ -45,7 +45,7 @@ class RegisterView(CreateModelMixin, GenericAPIView):
 
 class UpdateProfile(APIView):
     """  Update user api class """
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
@@ -70,7 +70,7 @@ class UpdateProfile(APIView):
 
 class UpdateProfilePicture(APIView):
     """  Update user api class """
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
