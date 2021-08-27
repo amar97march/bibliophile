@@ -9,6 +9,7 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     unique_book_id = models.CharField(max_length=50, unique=True)
     author = models.CharField(max_length=200, blank=True, null=True)
+    language = models.CharField(max_length=50, blank=True, null=True)
     published_date = models.DateField(null=True, blank=True)
     descripiton = models.CharField(max_length=10000, null=True, blank=True)
     image_link = models.CharField(max_length=1000, null=True, blank=True)

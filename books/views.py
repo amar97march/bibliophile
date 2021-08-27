@@ -15,7 +15,7 @@ from .helpers import get_book_data
 
 class BookInfo(APIView):
     """Info information class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, book_id):
@@ -35,7 +35,8 @@ class BookInfo(APIView):
                     image_link=image_link,
                     descripiton=res.json()["volumeInfo"]["description"]if ("description" in res.json()["volumeInfo"]) \
                     else None,
-                    author=res.json()["volumeInfo"]["authors"][0] if res.json()["volumeInfo"]["authors"] else None
+                    author=res.json()["volumeInfo"]["authors"][0] if res.json()["volumeInfo"]["authors"] else None,
+                    language=res.json()["volumeInfo"]["language"] if res.json()["volumeInfo"]["language"] else None
                 )
             data = get_book_data(book_obj, user)
 
@@ -47,7 +48,7 @@ class BookInfo(APIView):
 
 class BookReviews(APIView):
     """Class for book reviews"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -73,7 +74,7 @@ class BookReviews(APIView):
 
 class BookWishlist(APIView):
     """Wishlist API class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
@@ -102,7 +103,7 @@ class BookWishlist(APIView):
 
 class BookReadlist(APIView):
     """Add book to read section api"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
@@ -131,7 +132,7 @@ class BookReadlist(APIView):
 
 class BookShelflist(APIView):
     """Book Shelf Api class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):

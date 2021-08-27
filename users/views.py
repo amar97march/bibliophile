@@ -159,7 +159,7 @@ class UserProfile(APIView):
 
 class FriendProfile(APIView):
     """Different User Profile"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
@@ -173,7 +173,7 @@ class FriendProfile(APIView):
 
 class EmailVerification(APIView):
     """Verify OTP by email class"""
-    authentication_classes = []
+    # authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -199,7 +199,7 @@ class EmailVerification(APIView):
 
 class ResetPasswordEmailOTP(APIView):
     """Reset password by email oto"""
-    authentication_classes = []
+    # authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -245,7 +245,7 @@ class ResetPasswordEmailOTP(APIView):
 
 class FriendRequest(APIView):
     """User friends class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -310,7 +310,7 @@ class FriendRequest(APIView):
 
 class HomePage(APIView):
     """Home page url class"""
-    authentication_classes = [JWTAuthentication]
+    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
