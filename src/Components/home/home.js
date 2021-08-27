@@ -407,7 +407,7 @@ export default function Home() {
         />
       )}
       <div className="extra-section">
-        <h1>Top Rated Books</h1>
+        <h1>Top Rated</h1>
         <hr />
         <div className="books-list-container">
           {topRatedBooks.map((item, index) => (
@@ -421,7 +421,7 @@ export default function Home() {
         </div>
       </div>
       <div className="extra-section">
-        <h1>Popupar Books</h1>
+        <h1>Popular Titles</h1>
         <hr />
         <div className="books-list-container">
           {topPopularBooks.map((item, index) => (
@@ -435,7 +435,7 @@ export default function Home() {
         </div>
       </div>
       <div className="extra-section">
-        <h1>recommended Books</h1>
+        <h1>Recommended Books</h1>
         <hr />
         <div className="books-list-container">
           {recommendedBooks.map((item, index) => (
