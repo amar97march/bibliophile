@@ -41,7 +41,7 @@ const Login = ({ handleChange }) => {
             const formValues = {
                 first_name: data["given_name"],
                 last_name: data["family_name"],
-                // phone: 0,
+                phone: data["phone_number"],
                 email: data["email"],
                 // description: "",
             }
@@ -61,7 +61,6 @@ const Login = ({ handleChange }) => {
         
 
     }
-
 
     const onSubmit = async (values, props) => {
         const user = new CognitoUser({

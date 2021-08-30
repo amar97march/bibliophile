@@ -11,6 +11,8 @@ import FriendsUser from "../friends/friend_user";
 import {useHistory} from 'react-router-dom';
 import ImageCrop from "../../Containers/ImageCropper";
 import { updateProfilePicture } from "../../services/auth";
+import { CognitoUserAttribute, CognitoUserPool } from "amazon-cognito-identity-js";
+import UserPool from "../../services/UserPool";
 
 const defaultValues = {
   first_name: "",
@@ -100,6 +102,44 @@ const MyProfile = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formValues);
+    
+    var cognitoUser = UserPool.getCurrentUser();
+    if (cognitoUser != null) {
+      cognitoUser.getSession(function(err, session) {
+        if (err) {
+          alert(err.message || JSON.stringify(err));
+          return;
+        }
+        
+        const attributes = []
+        var attributeList = [
+          {"Name":"family_name",
+          "Value":formValues["last_name"]
+        },
+        {"Name":"given_name",
+        "Value":formValues["first_name"]
+      },
+      {"Name":"phone_number",
+        "Value":formValues["phone"]
+      }
+      ];
+        attributes.forEach(function (attribute){
+          var attribute_obj = new CognitoUserAttribute(attribute);
+        attributeList.push(attribute_obj);
+      })
+        
+
+        cognitoUser.updateAttributes(attributeList, function(err, result) {
+          if (err) {
+            alert(err.message || JSON.stringify(err));
+            return;
+          }
+          console.log('call result: ' + result);
+        });
+
+
+      });
+    }
     updateProfileData(formValues)
       .then((res) => {
         console.log(res);

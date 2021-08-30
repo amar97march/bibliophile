@@ -27,31 +27,29 @@ const Signup = () => {
   //   margin: "0px auto",
   // };
   const avatarStyle = { backgroundColor: "green" };
-//   const marginTop = { marginTop: 15 };
+  //   const marginTop = { marginTop: 15 };
 
   let history = useHistory();
 
-
-
-  // 
+  //
   // function App() {
   //   const [email, setEmail ] = useState('');
   //   const [password, setPassword ] = useState('')
-  
+
   //   const poolData = {
   //     UserPoolId: 'ap-south-1_SHAVBsp2a',
-  //     ClientId: '2qgvoimt1ol5osn8lgstb3009d'
+  //     ClientId: 'e6ub2h7rhhpor79kjtqdssl82'
   //   };
-  
+
   //   const UserPool = new CognitoUserPool(poolData)
-  
+
   //   const onSubmit = event => {
   //     event.preventDefault();
   //     UserPool.signUp(email,password,[],null,(err, data) => {
-  
+
   //     })
   //   }
-  
+
   //   return (
   //     <div>
   //       <form onSubmit = {onSubmit}>
@@ -60,13 +58,13 @@ const Signup = () => {
   //         />
   //         <input value = {password}
   //         onChange = {event => setPassword(event.target.value)} />
-        
+
   //       <button type = 'submit'>Signup</button>
   //       </form>
   //     </div>
   //   )
   // }
-  // 
+  //
 
   const initialValues = {
     firstName: "",
@@ -98,14 +96,28 @@ const Signup = () => {
   });
 
   const onSubmit = (values, props) => {
-    
-
-    UserPool.signUp(values["email"],values["password"],[{"Name":"given_name","Value":values["firstName"]},{"Name":"family_name","Value":values["lastName"]},{"Name":"gender","Value":"Male"}],null,(err, data) => {
-      props.setSubmitting(false);
-        console.log(err,data);
-
-
-          })
+    UserPool.signUp(
+      values["email"],
+      values["password"],
+      [
+        { Name: "given_name", Value: values["firstName"] },
+        { Name: "family_name", Value: values["lastName"] },
+        {Name:"phone_number", Value: values["phoneNumber"]}
+      ],
+      null,
+      (err, data) => {
+        props.setSubmitting(false);
+        console.log(err, data);
+        if (err !== null){
+        if ("message" in err){
+          props.setFieldError("email", err["message"]);
+        }
+      }
+      else{
+        
+      }
+      }
+    );
     // const payload = {
     //   email: values["email"],
     //   password: values["password"],
@@ -129,14 +141,13 @@ const Signup = () => {
     //     if ("phone" in err.response.data["errors"]) {
     //       props.setFieldError("phoneNumber", "phone number is already used");
     //     }
-        
-        
+
     //   });
   };
 
   return (
     <Grid>
-      <Paper className = "login-section">
+      <Paper className="login-section">
         <Grid align="center">
           <Avatar style={avatarStyle}>
             <AddCircleOutlinedIcon />
@@ -151,7 +162,7 @@ const Signup = () => {
           onSubmit={onSubmit}
           validationSchema={validationSchema}
           validateOnChange={false}
-      validateOnBlur={false}
+          validateOnBlur={false}
         >
           {(props) => (
             <Form>
@@ -221,8 +232,14 @@ const Signup = () => {
                 {" "}
                 <ErrorMessage name="termsAndConditions" />{" "}
               </FormHelperText>
-              <Button className = "signup-btn" type="submit" disabled = {props.isSubmitting} variant="contained" color="primary">
-              {props.isSubmitting?"Signing in...":"Sign Up"}
+              <Button
+                className="signup-btn"
+                type="submit"
+                disabled={props.isSubmitting}
+                variant="contained"
+                color="primary"
+              >
+                {props.isSubmitting ? "Signing in..." : "Sign Up"}
               </Button>
             </Form>
           )}

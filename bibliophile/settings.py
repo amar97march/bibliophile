@@ -158,7 +158,7 @@ EMAIL_HOST_PASSWORD = 'P@ssw0rd123#'
 
 
 COGNITO_AWS_REGION = 'ap-south-1'
-COGNITO_USER_POOL = 'ap-south-1_SHAVBsp2a'
+COGNITO_USER_POOL = 'ap-south-1_2FbUOELOI'
 # Provide this value if `id_token` is used for authentication (it contains 'aud' claim).
 # `access_token` doesn't have it, in this case keep the COGNITO_AUDIENCE empty
 COGNITO_AUDIENCE = None
