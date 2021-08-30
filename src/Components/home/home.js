@@ -419,7 +419,7 @@ export default function Home() {
               image_link={item.image_link}
               unique_book_id={item.unique_book_id}
             />
-          )):<div className = "empty-book-list">Noo Books</div>}
+          )):<div className = "empty-book-list">No Books</div>}
         </div>
       </div>
       <div className="extra-section">

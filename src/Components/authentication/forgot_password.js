@@ -13,6 +13,8 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { forgetPassword, resendOtpCall } from "../../services/auth";
 import { useHistory } from "react-router-dom";
+import { CognitoUser } from "amazon-cognito-identity-js";
+import UserPool from "../../services/UserPool";
 
 const ResetPassword = () => {
   let history = useHistory();
@@ -44,51 +46,65 @@ const validationSchemaReset = Yup.object().shape({
 });
 
   const onSubmit = (values, props) => {
-    const payload = {
-      email: email,
-      newPassword: values["password"],
-      otp: values["otp"],
+    // const payload = {
+    //   email: email,
+    //   newPassword: values["password"],
+    //   otp: values["otp"],
+    // };
+    var userData = {
+      Username: email,
+      Pool: UserPool,
     };
-    console.log(payload);
-    forgetPassword(payload)
-      .then((res) => {
-        console.log(res);
+    var cognitoUser = new CognitoUser(userData);
+    cognitoUser.confirmPassword(values["otp"], values["password"], {
+			onSuccess() {
+				alert('Password confirmed!');
+			},
+			onFailure(err) {
+				alert('Password not confirmed!');
+			},
+		});
+    // console.log(payload);
+    // forgetPassword(payload)
+    //   .then((res) => {
+    //     console.log(res);
 
-        props.setSubmitting(false);
-        setTimeout(() => {
-          history.push("/");
-        }, 1000);
-      })
-      .catch((err) => {
-        props.setFieldError("otp", "Otp is invalid");
+    //     props.setSubmitting(false);
+    //     setTimeout(() => {
+    //       history.push("/");
+    //     }, 1000);
+    //   })
+    //   .catch((err) => {
+    //     props.setFieldError("otp", "Otp is invalid");
 
-        props.setSubmitting(false);
-      });
+    //     props.setSubmitting(false);
+    //   });
   };
   const resendOtp = (values, props) => {
     const payload = {
       email: values["email"]
     };
     console.log(payload);
-    resendOtpCall(payload)
-      .then((res) => {
-        console.log(res);
+    
+    var userData = {
+      Username: values["email"],
+      Pool: UserPool,
+    };
+    var cognitoUser = new CognitoUser(userData);
+    cognitoUser.forgotPassword({
+      onSuccess: function(data) {
+        // successfully initiated reset password request
         setShowResetSection({})
         setEmail(values["email"])
         props.setSubmitting(false);
-      })
-      .catch((err) => {
-          
-          if ("error" in err.response.data){
-
-          props.setFieldError("email",err.response.data.error)
-          }
-          else{
-            props.setFieldError("email","Email not found")
-          }
-          
-          props.setSubmitting(false); 
-      });
+      },
+      onFailure: function(err) {
+        props.setFieldError("email",err.message)
+        props.setSubmitting(false);
+      }
+  
+    });
+    
   };
 
   return (
@@ -151,7 +167,7 @@ const validationSchemaReset = Yup.object().shape({
                 type="password"
                 placeholder="Enter your password again"
               />
-            <Button type="submit" variant="contained" disabled = {props.isSubmitting} fullWidth color="primary">{props.isSubmitting?"Loading":"Update"}</Button>
+            <Button type="submit" variant="contained" disabled = {props.isSubmitting} fullWidth color="primary">{props.isSubmitting?"Updating":"Update"}</Button>
 
         </Form>
           )}

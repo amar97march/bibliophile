@@ -84,7 +84,22 @@ const Login = ({ handleChange }) => {
             },
             onFailure: err => {
                 console.log("onFailure:", err);
+                
                 props.setFieldError("email", err["message"]);
+                if (err["message"]=== "User is not confirmed."){
+                    var userData = {
+                        Username: values["email"],
+                        Pool: UserPool,
+                      };
+                      
+                      var cognitoUser = new CognitoUser(userData);
+                      cognitoUser.resendConfirmationCode(function(err, result) {
+                  
+                      })
+                    setTimeout(() => {
+                        history.push("/verify_email_otp/", { email: values["email"] });
+                      }, 2000);
+                }
                 props.setSubmitting(false)
             },
             newPasswordRequired: data => {
@@ -93,21 +108,6 @@ const Login = ({ handleChange }) => {
                 props.setSubmitting(false)
             }
         })
-        // console.log(values)
-        // const payload = values;
-        // signin(payload)
-        // .then((res) => {
-        //   saveTokenToLocalstorage(res.data.access);
-        // console.log(res);
-        // props.resetForm()
-        // props.setSubmitting(false)
-        // history.push("/home/");
-        // })
-        // .catch((err) => {
-        //   console.log(err);
-        //   props.setFieldError("email", "Invalid Credentials");
-        //   props.setSubmitting(false)
-        // });
 
         
     }

@@ -119,9 +119,10 @@ const MyProfile = () => {
         {"Name":"given_name",
         "Value":formValues["first_name"]
       },
-      {"Name":"phone_number",
-        "Value":formValues["phone"]
-      }
+      {"Name":"email_verified",
+        "Value":"true"
+      },
+
       ];
         attributes.forEach(function (attribute){
           var attribute_obj = new CognitoUserAttribute(attribute);

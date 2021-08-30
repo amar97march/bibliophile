@@ -102,20 +102,19 @@ const Signup = () => {
       [
         { Name: "given_name", Value: values["firstName"] },
         { Name: "family_name", Value: values["lastName"] },
-        {Name:"phone_number", Value: values["phoneNumber"]}
+        { Name: "phone_number", Value: values["phoneNumber"] },
       ],
       null,
       (err, data) => {
         props.setSubmitting(false);
         console.log(err, data);
-        if (err !== null){
-        if ("message" in err){
-          props.setFieldError("email", err["message"]);
+        if (err !== null) {
+          if ("message" in err) {
+            props.setFieldError("email", err["message"]);
+          }
+        } else {
+          history.push("/verify_email_otp/", { email: values["email"] });
         }
-      }
-      else{
-        
-      }
       }
     );
     // const payload = {
@@ -131,7 +130,7 @@ const Signup = () => {
     //     console.log(res);
     //     props.resetForm();
     //     props.setSubmitting(false);
-    //     history.push("/verify_email_otp/", {email: values["email"]});
+    // history.push("/verify_email_otp/", {email: values["email"]});
     //   })
     //   .catch((err) => {
     //     console.log(err.response.data);
