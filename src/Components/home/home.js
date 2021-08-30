@@ -177,7 +177,7 @@ export default function Home() {
     // if(timeout) clearTimeout(this.timeout);
     // timeout = setTimeout(() => {
     //search function
-
+    console.log("ff",recommendedBooks)
     SearchBook(search_text, page)
       .then((res) => {
         console.log(res);
@@ -194,7 +194,6 @@ export default function Home() {
       })
       .catch((err) => {});
     // }, 300);
-    console.log(event.target.value);
   };
 
   const handleChange = (event, value) => {
@@ -203,6 +202,7 @@ export default function Home() {
       .then((res) => {
         console.log(res);
         setBooks(res.data.items);
+        
       })
       .catch((err) => {});
   };
@@ -410,42 +410,48 @@ export default function Home() {
         <h1>Top Rated</h1>
         <hr />
         <div className="books-list-container">
-          {topRatedBooks.map((item, index) => (
+        {topRatedBooks.length !== 0 ?
+          
+          topRatedBooks.map((item, index) => (
             <ProfileBook
               key={index}
               title={item.title}
               image_link={item.image_link}
               unique_book_id={item.unique_book_id}
             />
-          ))}
+          )):<div className = "empty-book-list">Noo Books</div>}
         </div>
       </div>
       <div className="extra-section">
         <h1>Popular Titles</h1>
         <hr />
         <div className="books-list-container">
-          {topPopularBooks.map((item, index) => (
+        {topPopularBooks.length !== 0 ?
+          
+          topPopularBooks.map((item, index) => (
             <ProfileBook
               key={index}
               title={item.title}
               image_link={item.image_link}
               unique_book_id={item.unique_book_id}
             />
-          ))}
+          )):<div className = "empty-book-list">Not yet explored</div>}
         </div>
       </div>
       <div className="extra-section">
         <h1>Recommended Books</h1>
         <hr />
         <div className="books-list-container">
-          {recommendedBooks.map((item, index) => (
+        {recommendedBooks.length !== 0?
+          
+          recommendedBooks.map((item, index) => (
             <ProfileBook
               key={index}
               title={item.title}
               image_link={item.image_link}
               unique_book_id={item.unique_book_id}
             />
-          ))}
+          )):<div className = "empty-book-list">No recommendations found</div>}
         </div>
       </div>
     </div>

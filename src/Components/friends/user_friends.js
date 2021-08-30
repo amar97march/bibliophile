@@ -39,9 +39,10 @@ const FriendPage= () => {
             <h1>Pending Friend Requests</h1>
             <hr/>
             <div className="friends-list-container">
-              {pendingRequests.map((item) => (
+              {pendingRequests.length !== 0?
+              pendingRequests.map((item) => (
                 <FriendsUserRequest key = {item.id} fetchItems ={fetchItems} email = {item.user.email} image_link = {item.user.profile_image} request_id = {item.id} user_id = {item.user.id}/>
-              ))}
+              )):<div style = {{"textAlign":"center", "marginTop":"40px", "marginBottom":"40px"}} >No pending requests</div>}
             </div>
             
           </div>
@@ -49,9 +50,10 @@ const FriendPage= () => {
             <h1>Friends</h1>
             <hr/>
             <div className="friends-list-container">
-              {friends.map((item) => (
+              {friends.length !== 0?
+              friends.map((item) => (
                 <FriendsUser key = {item.id} fetchItems = {fetchItems} email = {item.user.email} image_link = {item.user.profile_image} user_id = {item.user.id}/>
-              ))}
+              )):<div style = {{"textAlign":"center", "marginTop":"40px", "marginBottom":"40px"}}>No friends yet</div>}
             </div>
           </div>
         </div>

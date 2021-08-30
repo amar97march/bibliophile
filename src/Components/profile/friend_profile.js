@@ -132,33 +132,36 @@ const UserProfile = (props) => {
             <h1>Wishlist</h1>
             <hr />
             <div className="books-list-container">
-              {wishlist.map((item) => (
+              {wishlist.length !== 0?
+              wishlist.map((item) => (
                 <ProfileBook
                   title={item.title}
                   image_link={item.image_link}
                   unique_book_id={item.unique_book_id}
                 />
-              ))}
+              )): <div className = "empty-book-list">No book in wishlist</div>}
             </div>
           </div>
           <div className="extra-section">
             <h1>Bookshelf</h1>
             <hr />
             <div className="books-list-container">
-              {shelflist.map((item) => (
+            {shelflist.length !== 0?
+              shelflist.map((item) => (
                 <ProfileBook
                   title={item.title}
                   image_link={item.image_link}
                   unique_book_id={item.unique_book_id}
                 />
-              ))}
+              )): <div className = "empty-book-list">No book in Bookshelf</div>}
             </div>
           </div>
           <div className="extra-section">
             <h1>Friends</h1>
             <hr />
             <div className="friends-list-container">
-              {friends.map((item) => (
+            {friends.length !== 0?
+              friends.map((item) => (
                 <FriendsUser
                   key={item.id}
                   fetchItems={fetchItems}
@@ -166,7 +169,7 @@ const UserProfile = (props) => {
                   image_link={item.user.profile_image}
                   user_id={item.user.id}
                 />
-              ))}
+              )): <div className = "empty-book-list" style = {{"textAlign":"center", "marginTop":"40px", "marginBottom":"40px"}}>No friends</div>}
             </div>
           </div>
         </div>
