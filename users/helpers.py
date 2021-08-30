@@ -6,7 +6,7 @@ import uuid
 from django.conf import settings
 from books.models import *
 from .models import *
-from .models import UserSerializer
+from .serializers import UserSerializer
 from django.db.models import Q, Count, Avg
 # from django.core.cache import cache
 
