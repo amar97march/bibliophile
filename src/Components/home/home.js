@@ -20,6 +20,9 @@ import { useHistory, Link } from "react-router-dom";
 import { getHomePageData } from "../../services/auth";
 import BookNA from "../../Assets/book_na.jpg";
 import ProfileBook from "../profile/profile_book";
+import UserPool from "../../services/UserPool";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from 'react-responsive-carousel';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -143,6 +146,8 @@ export default function Home() {
 
   function logoutClick(event, data) {
     localStorage.removeItem("bibliophile_token");
+    var cognitoUser = UserPool.getCurrentUser();
+    cognitoUser.signOut();
     history.push("/");
   }
 
@@ -406,6 +411,17 @@ export default function Home() {
           onChange={handleChange}
         />
       )}
+      <Carousel autoPlay interval = {3000} showThumbs = {false} >
+                <div>
+                    <img src="https://quotesbook.com/images/quotes/preview/time-quote-so-many-books-so-little-time-1426.jpg" alt= "book1"/>
+                </div>
+                <div>
+                    <img src="https://wallpaperbat.com/img/576236-knowledge-quotes-wallpaper-books-hd-wallpaper-background-download.jpg" alt= "book2"/>
+                </div>
+                <div>
+                    <img src="https://www.teahub.io/photos/full/102-1024997_learning-quotes-wallpaper-shiny-apple-for-the-teacher.jpg" alt= "book3"/>
+                </div>
+            </Carousel>
       <div className="extra-section">
         <h1>Top Rated</h1>
         <hr />

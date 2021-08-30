@@ -11,8 +11,14 @@
   width: 290px !important;
   margin: 0px auto !important;
 }
+
+.SigninOutcontainer .MuiPaper-elevation1 {
+  box-shadow: none !important;
+}
+
 .SigninOutcontainer h1 {
   font-family: "Barrio", cursive;
+  color: white;
 }
 
 .SigninOutcontainer {
@@ -22,7 +28,7 @@
   justify-content: center;
   flex-direction: column;
   height: 100vh;
-  background: url("https://www.blurb.com/blog/wp-content/uploads/2019/07/2019_Blog_Header_comics9steps_blog_v01ap.jpg")
+  background: url("https://www.marthabronstein.com/wp-content/uploads/2020/06/album-page-cover.jpg")
     fixed no-repeat;
   background-size: cover;
 }

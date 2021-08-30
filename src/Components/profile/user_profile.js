@@ -119,9 +119,6 @@ const MyProfile = () => {
         {"Name":"given_name",
         "Value":formValues["first_name"]
       },
-      {"Name":"email_verified",
-        "Value":"true"
-      },
 
       ];
         attributes.forEach(function (attribute){
