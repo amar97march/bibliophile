@@ -45,7 +45,6 @@ const Login = ({ handleChange }) => {
                 email: data["email"],
                 // description: "",
             }
-            console.log(formValues);
             
             updateProfileData(formValues)
             .then((res) => {
