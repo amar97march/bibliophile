@@ -18,6 +18,7 @@ from django.contrib.auth.validators import UnicodeUsernameValidator
 from core.models import AbstractBaseModel
 
 from django.conf import settings
+from .serializers import UserSerializer
 
 
 # class User(AbstractUser):
