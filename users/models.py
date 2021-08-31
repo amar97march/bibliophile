@@ -56,7 +56,7 @@ class User(PermissionsMixin, AbstractBaseUser, AbstractBaseModel):
     last_name = models.CharField(max_length=50, null=True, blank = True)
     description = models.CharField(max_length=200, null=True, blank = True)
     sub = models.UUIDField(editable=False, unique=True)
-    email= models.EmailField(unique=True)
+    email= models.EmailField(null=True, blank=True)
     profile_image = models.FileField(upload_to='uploads/', null=True, blank=True)
     is_phone_verified = models.BooleanField(default=False)
     is_email_verified = models.BooleanField(default=False)
