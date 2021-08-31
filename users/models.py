@@ -51,7 +51,7 @@ class User(PermissionsMixin, AbstractBaseUser, AbstractBaseModel):
     # username_validator = UnicodeUsernameValidator()
     username = None
     is_active = models.BooleanField('Active', default=True)
-    phone = models.CharField(max_length=15, unique=True)
+    phone = models.CharField(max_length=15, null=True, blank= True)
     first_name = models.CharField(max_length=50, null=True, blank = True)
     last_name = models.CharField(max_length=50, null=True, blank = True)
     description = models.CharField(max_length=200, null=True, blank = True)

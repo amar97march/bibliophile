@@ -148,6 +148,7 @@ class UserProfile(APIView):
     def put(self, request):
         """ Update user profile data"""
         user_data = User.objects.get(id=request.user.id)
+
         serializer = UserSerializer(
             request.user, data=request.data, partial=True)
         if serializer.is_valid(raise_exception=True):
