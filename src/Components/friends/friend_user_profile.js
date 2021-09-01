@@ -2,7 +2,7 @@ import React from "react";
 import default_pic from "../../Assets/profile.jpeg"
 import { Link } from "react-router-dom";
 
-const FriendsUser = (props) => {
+const FriendsUserProfile = (props) => {
 
 
   return (
@@ -15,7 +15,6 @@ const FriendsUser = (props) => {
                   
                     <div className="image">
                       <img className="img-item" src={(props.image_link!=null)?props.image_link:default_pic} alt="" />
-                      <div className="mobile-name">{props.email}</div>
                     </div>
                   
                 </div>
@@ -28,4 +27,4 @@ const FriendsUser = (props) => {
                 </div>
   );
 };
-export default FriendsUser;
+export default FriendsUserProfile;

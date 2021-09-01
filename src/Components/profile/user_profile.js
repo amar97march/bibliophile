@@ -7,7 +7,7 @@ import "../../css/profile-section.css";
 import { getProfileData, updateProfileData } from "../../services/auth";
 import default_pic from "../../Assets/profile.jpeg";
 import ProfileBook from "./profile_book";
-import FriendsUser from "../friends/friend_user";
+import FriendsUserProfile from "../friends/friend_user_profile";
 import {useHistory} from 'react-router-dom';
 import ImageCrop from "../../Containers/ImageCropper";
 import { updateProfilePicture } from "../../services/auth";
@@ -286,7 +286,7 @@ const MyProfile = () => {
             <div className="friends-list-container">
             {friends.length !== 0?
               friends.map((item) => (
-                <FriendsUser
+                <FriendsUserProfile
                   key={item.id}
                   fetchItems={fetchItems}
                   email={item.user.email}

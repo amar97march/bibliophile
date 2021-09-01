@@ -5,6 +5,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Button } from "@material-ui/core";
 import { updateFriendRequest } from "../../services/auth";
 import {useHistory} from 'react-router-dom';
+import '../../css/friend-section.css'
 
 const FriendsUserRequest = (props) => {
   let history = useHistory();
@@ -55,6 +56,7 @@ const FriendsUserRequest = (props) => {
                   >
                     <div className="image">
                       <img className="img-item" src={(props.image_link!=null)?props.image_link:default_pic} alt="" />
+                      <div className="mobile-name">{props.email}</div>
                     </div>
                   </Link>
                 </div>

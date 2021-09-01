@@ -58,10 +58,10 @@
   /* border: 1px solid #b8c8cc; */
   border-radius: 10px;
   margin: 2%;
-  height: 100px;
+  height: 160px;
   /* width: 150px; */
   border: 1px solid rgba(0, 0, 0, 0.041);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+  /* box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23); */
   padding: 2%;
 }
 
@@ -123,6 +123,15 @@
   .friend-subsection
   .friend-form
   .friends-list-container
+  .friend-inner-section button{
+    width:120px;
+    margin:5px;
+  }
+
+.friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
   .friend-inner-section
   .container
   .image-product-id
@@ -152,7 +161,7 @@
   .friend-inner-section
   .container
   .item-info {
-  margin: 2% auto 2% auto;
+  margin: auto auto auto auto;
   /* float: left; */
   color: rgba(0, 0, 0, 0.5);
 
@@ -184,6 +193,8 @@
   /* height:20%; */
 }
 
+
+
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 400px) {
   .friend_section .friend-subsection .friend-image {
@@ -197,6 +208,18 @@
     width: 100%;
     padding: 20px 20px;
   }
+  
+}
+
+@media only screen and (max-width: 340px) {
+  .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .mobile-name {
+    font-size: 9px;
+  }
+  .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section button{
+    width: 80px;
+    font-size: 8px;
+  }
+
 }
 
 @media only screen and (max-width: 600px) {
@@ -241,6 +264,22 @@
     .friend-form
     .MuiGrid-align-items-xs-center {
     align-items: center;
+  }
+  .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info .name {
+    display: none;
+  }
+  .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .item-info .mobile-name {
+    display: block;
+  }
+  .friend_section .friend-subsection .friend-form .friends-list-container .friend-inner-section .container .image-product-id .image .img-item {
+    height: 80%;
+  }
+  .friend_section
+  .friend-subsection
+  .friend-form
+  .friends-list-container
+  .friend-inner-section button{
+    width:100px;
   }
 }
 

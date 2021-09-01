@@ -52,8 +52,8 @@ def friend_profile_data(user_data, data, request):
         friends_list_send = [{"id": obj.id, "user": UserSerializer(obj.receiver).data} for obj in
                              Friends.objects.filter(sender=user_data, accepted=True, status=True)]
         friends_list.extend(friends_list_send)
-        request_obj = Friends.objects.filter(
-            sender=request.user, receiver=user_data, status=True).first()
+        request_obj = Friends.objects.filter(Q(
+            sender=request.user, receiver=user_data, status=True)|Q(receiver=request.user, sender=user_data, status=True)).first()
         if request_obj and request_obj.accepted:
             request_status = 2
         elif request_obj and not request_obj.accepted:
