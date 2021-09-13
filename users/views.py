@@ -8,14 +8,12 @@ from rest_framework.generics import GenericAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_simplejwt.authentication import JWTAuthentication
 from .helpers import send_otp_to_mobile, user_profile_pic_update, send_email_token,\
     friend_profile_data, user_profile_data, get_homepage_data
 from rest_framework_simplejwt.tokens import RefreshToken
 from books.models import *
 import random
-# from django.core.cache import cache
-from django.core.mail import message, send_mail
+from django.core.mail import send_mail
 import logging
 
 
@@ -28,24 +26,10 @@ class RegisterView(CreateModelMixin, GenericAPIView):
     def post(self, request, *args, **kwargs):
         """ User Creation API """
         return self.create(request, *args, **kwargs)
-        # try:
-        #     serializer = UserSerializer(data=request.data)
-        #
-        #     if not serializer.is_valid():
-        #         return Response({
-        #             'status': 403,
-        #             'errors': serializer.errors
-        #         }, status=status.HTTP_403_FORBIDDEN)
-        #     serializer.save()
-        #     return Response({'status': 200, 'message': 'An email OTP sent on your number and email'})
-        # except Exception as e:
-        #     logging.error(e)
-        #     return Response({'status': 404, 'error': 'something went wrong'})
 
 
 class UpdateProfile(APIView):
     """  Update user api class """
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
@@ -70,7 +54,6 @@ class UpdateProfile(APIView):
 
 class UpdateProfilePicture(APIView):
     """  Update user api class """
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def patch(self, request):
@@ -134,7 +117,6 @@ class VerifyOtp(APIView):
 
 class UserProfile(APIView):
     """User data class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
@@ -147,7 +129,6 @@ class UserProfile(APIView):
 
     def put(self, request):
         """ Update user profile data"""
-        user_data = User.objects.get(id=request.user.id)
 
         serializer = UserSerializer(
             request.user, data=request.data, partial=True)
@@ -160,7 +141,6 @@ class UserProfile(APIView):
 
 class FriendProfile(APIView):
     """Different User Profile"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, user_id):
@@ -174,13 +154,11 @@ class FriendProfile(APIView):
 
 class EmailVerification(APIView):
     """Verify OTP by email class"""
-    # authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
         """Verify email method"""
         try:
-            data = request.data
 
             user_obj = User.objects.get(email=request.data.get("email"))
 
@@ -200,18 +178,13 @@ class EmailVerification(APIView):
 
 class ResetPasswordEmailOTP(APIView):
     """Reset password by email oto"""
-    # authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
         """Send OTP and link to email"""
         try:
             user_data = User.objects.get(email=request.data.get("email"))
-            # if cache.get(f"RESET-{user_data.email}"):
-            #     return Response({"status":403,  "error":f"Please retry
-            #     after {cache.ttl(f'RESET-{user_data.email}')} seconds"})
             otp_to_sent = random.randint(1000, 9999)
-            # cache.set(f"RESET-{user_data.email}", otp_to_sent, timeout=60)
             user_data.otp = otp_to_sent
             subject = "Otp for resetting password"
             message = f"Your OTP is {otp_to_sent}"
@@ -246,7 +219,6 @@ class ResetPasswordEmailOTP(APIView):
 
 class FriendRequest(APIView):
     """User friends class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -282,8 +254,6 @@ class FriendRequest(APIView):
             friends_list.extend(friends_list_send)
             pending_requests = [{"id": obj.id, "user": UserSerializer(
                 obj.sender).data} for obj in Friends.objects.filter(receiver=user, accepted=False)]
-            # friends = UserSerializer(friends_list, many=True).data
-            # pending = UserSerializer(pending_requests, many=True).data
             return Response({"status": 200, "data": {"friends": friends_list, "pending": pending_requests}})
         except Exception as e:
             logging.error(e)
@@ -311,7 +281,6 @@ class FriendRequest(APIView):
 
 class HomePage(APIView):
     """Home page url class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request):

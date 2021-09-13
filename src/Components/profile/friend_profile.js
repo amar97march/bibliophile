@@ -84,7 +84,7 @@ const UserProfile = (props) => {
         if (err.response.status){
           history.push("/")
         }
-        alert("Please try again later")
+        console.log("Please try again later")
       });
     
   };

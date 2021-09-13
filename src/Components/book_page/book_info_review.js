@@ -6,7 +6,6 @@ import "../../css/book-info.css";
 import { addBookReview } from "../../services/auth";
 import StarRatings from "react-star-ratings";
 import { Link, useHistory } from "react-router-dom";
-// import profile_image from "../../Assets/profile.jpeg";
 
 const defaultValues = {
   review: "",
@@ -43,7 +42,7 @@ const BookReviews = (props) => {
         if (err.response.status){
           history.push("/login/");
         }
-        alert("Please try again later");
+        console.log("Please try again later");
       });
   };
 

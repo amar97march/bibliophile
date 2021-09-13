@@ -20,9 +20,7 @@ import dotenv
 import dj_database_url
 import sys
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-# BASE_DIR = Path(__file__).resolve().root.root
 
 dotenv_file = os.path.join(BASE_DIR, ".env")
 if os.path.isfile(dotenv_file):
@@ -91,16 +89,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'bibliophile.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {}
 DATABASES['default']= dj_database_url.config(conn_max_age=600)
@@ -185,12 +173,6 @@ CACHES = {
     }
 }
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     )
-# }
-
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'core.api.permissions.DenyAny',
@@ -246,17 +228,8 @@ JWT_AUTH = {
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
 }
 
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'build/static')
-# ]
-
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'staticfiles/media/')
 MEDIA_URL = "/media/"
-
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 AWS_ACCESS_KEY_ID = 'AKIAYN5CE46KGUCJCUNS'
@@ -276,7 +249,6 @@ STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 
 ROOT_URL = "https://bibliophile-react-django.herokuapp.com/"
-# ROOT_URL = "http://127.0.0.1:8000/"
 
 CORS_ORIGIN_ALLOW_ALL = True
 

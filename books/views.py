@@ -2,20 +2,15 @@
 from rest_framework.response import Response
 from .models import *
 import requests
-from rest_framework import status
 from rest_framework.views import APIView
 import logging
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework_simplejwt.authentication import JWTAuthentication
-# from .helpers import send_otp_to_mobile
-
+from rest_framework.permissions import IsAuthenticated
 
 from .helpers import get_book_data
 
 
 class BookInfo(APIView):
     """Info information class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def get(self, request, book_id):
@@ -48,7 +43,6 @@ class BookInfo(APIView):
 
 class BookReviews(APIView):
     """Class for book reviews"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -61,8 +55,6 @@ class BookReviews(APIView):
             if not book_obj:
                 return Response({"status": 404, "error": "Book not found"})
             review_obj = BookReview.objects.filter(book = book_obj, user=user).first()
-            # if review_obj:
-            #     return Response({"status":403, "error":"Review already added by this user for this book"})
             review_obj = BookReview.objects.create(book=book_obj, user=user, comment=data.get("comment"),
                                                    rating=data.get("rating"))
             
@@ -74,7 +66,6 @@ class BookReviews(APIView):
 
 class BookWishlist(APIView):
     """Wishlist API class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
@@ -103,7 +94,6 @@ class BookWishlist(APIView):
 
 class BookReadlist(APIView):
     """Add book to read section api"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):
@@ -132,7 +122,6 @@ class BookReadlist(APIView):
 
 class BookShelflist(APIView):
     """Book Shelf Api class"""
-    # authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
     def put(self, request):

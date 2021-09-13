@@ -8,8 +8,6 @@ import MyProfile from './Components/profile/user_profile'
 import FriendPage from './Components/friends/user_friends';
 import BookInfoBox from './Containers/book-info-box'
 import UserProfile from './Components/profile/friend_profile'
-import { CognitoUserPool } from 'amazon-cognito-identity-js'
-import { useState } from 'react';
 
 axios.defaults.xsrfCookieName = 'csrftoken'
 axios.defaults.xsrfHeaderName = 'X-CSRFToken'

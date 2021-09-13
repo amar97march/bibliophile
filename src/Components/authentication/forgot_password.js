@@ -11,7 +11,6 @@ import {
 import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { forgetPassword, resendOtpCall } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import { CognitoUser } from "amazon-cognito-identity-js";
 import UserPool from "../../services/UserPool";
@@ -46,11 +45,7 @@ const validationSchemaReset = Yup.object().shape({
 });
 
   const onSubmit = (values, props) => {
-    // const payload = {
-    //   email: email,
-    //   newPassword: values["password"],
-    //   otp: values["otp"],
-    // };
+
     var userData = {
       Username: email,
       Pool: UserPool,
@@ -58,27 +53,16 @@ const validationSchemaReset = Yup.object().shape({
     var cognitoUser = new CognitoUser(userData);
     cognitoUser.confirmPassword(values["otp"], values["password"], {
 			onSuccess() {
-				alert('Password confirmed!');
+				console.log('Password confirmed!');
+        setTimeout(() => {
+                history.push("/");
+              }, 1000);
+            
 			},
 			onFailure(err) {
-				alert('Password not confirmed!');
+				console.log('Password not confirmed!');
 			},
 		});
-    // console.log(payload);
-    // forgetPassword(payload)
-    //   .then((res) => {
-    //     console.log(res);
-
-    //     props.setSubmitting(false);
-    //     setTimeout(() => {
-    //       history.push("/");
-    //     }, 1000);
-    //   })
-    //   .catch((err) => {
-    //     props.setFieldError("otp", "Otp is invalid");
-
-    //     props.setSubmitting(false);
-    //   });
   };
   const resendOtp = (values, props) => {
     const payload = {
@@ -116,7 +100,7 @@ const validationSchemaReset = Yup.object().shape({
           </Avatar>
           <h2>Reset Password</h2>
           <Typography variant="caption">
-            {/* Please enter OTP sent to {location.state.email} */}
+            
           </Typography>
         </Grid>
         <Formik

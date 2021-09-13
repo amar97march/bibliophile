@@ -24,7 +24,7 @@ const FriendsUserRequest = (props) => {
       if (err.response.status === 401){
         history.push("/");
       }
-      alert("Please try again later")
+      console.log("Please try again later")
     });
   }
 
@@ -41,7 +41,7 @@ const FriendsUserRequest = (props) => {
       if (err.response.status === 401){
         history.push("/");
       }
-      alert("Please try again later")
+      console.log("Please try again later")
     });
   }
 

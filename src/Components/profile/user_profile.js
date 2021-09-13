@@ -11,7 +11,7 @@ import FriendsUserProfile from "../friends/friend_user_profile";
 import {useHistory} from 'react-router-dom';
 import ImageCrop from "../../Containers/ImageCropper";
 import { updateProfilePicture } from "../../services/auth";
-import { CognitoUserAttribute, CognitoUserPool } from "amazon-cognito-identity-js";
+import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 import UserPool from "../../services/UserPool";
 
 const defaultValues = {
@@ -68,7 +68,7 @@ const MyProfile = () => {
       })
       .catch((err) => {
         console.log(err);
-        alert("Details not saved. Contact Admin")
+        console.log("Details not saved. Contact Admin")
       });
   }
 
@@ -107,7 +107,7 @@ const MyProfile = () => {
     if (cognitoUser != null) {
       cognitoUser.getSession(function(err, session) {
         if (err) {
-          alert(err.message || JSON.stringify(err));
+          console.log(err.message || JSON.stringify(err));
           return;
         }
         
@@ -129,7 +129,7 @@ const MyProfile = () => {
 
         cognitoUser.updateAttributes(attributeList, function(err, result) {
           if (err) {
-            alert(err.message || JSON.stringify(err));
+            console.log(err.message || JSON.stringify(err));
             return;
           }
           console.log('call result: ' + result);
@@ -141,13 +141,13 @@ const MyProfile = () => {
     updateProfileData(formValues)
       .then((res) => {
         console.log(res);
-        alert("Updated");
+        console.log("Updated");
       })
       .catch((err) => {
         if(err.response.status === 401){
           history.push("/");
         }
-        alert("Please try again later");
+        console.log("Please try again later");
       });
   };
 

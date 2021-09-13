@@ -12,5 +12,4 @@ urlpatterns = [
     path('book_wishlist/', BookWishlist.as_view()),
     path('book_readlist/', BookReadlist.as_view()),
     path('book_shelflist/', BookShelflist.as_view()),
-    # path('friends_list/', Friends.as_view())
 ]

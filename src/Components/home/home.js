@@ -8,7 +8,6 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
 import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import PeopleAltIcon from "@material-ui/icons/PeopleAlt";
@@ -162,9 +161,7 @@ export default function Home() {
         setRecommendedBooks(res.data.data.recommended_books);
       })
       .catch((err) => {
-        // if (err.response.status ===401){
-        //   history.push("/");
-        // }
+        
       });
   };
 
@@ -179,8 +176,7 @@ export default function Home() {
     } else {
       setSearchDataStatus(false);
     }
-    // if(timeout) clearTimeout(this.timeout);
-    // timeout = setTimeout(() => {
+    
     //search function
     console.log("ff",recommendedBooks)
     SearchBook(search_text, page)
@@ -198,7 +194,7 @@ export default function Home() {
         }
       })
       .catch((err) => {});
-    // }, 300);
+    
   };
 
   const handleChange = (event, value) => {
@@ -289,14 +285,6 @@ export default function Home() {
     <div className={classes.grow}>
       <AppBar position="static">
         <Toolbar>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
 
           <Typography className={classes.title} variant="h6" noWrap>
             Bibliophile
@@ -388,18 +376,6 @@ export default function Home() {
                   : ""
               }
             />
-            // <div>
-            //     <div>Id: {noteItem.id}</div>
-            //     <div>Title: {noteItem.volumeInfo.title}</div>
-            //     <div>Author: {noteItem.volumeInfo.authors && noteItem.volumeInfo.authors[0]}</div>
-            //     <div>Publisher: {noteItem.publisher}</div>
-            //     <div>Description: {noteItem.description}</div>
-            //     <div>Page Count: {noteItem.volumeInfo && noteItem.volumeInfo.pageCount}</div>
-            //     <img src = {noteItem.volumeInfo.imageLinks && noteItem.volumeInfo.imageLinks.thumbnail} alt = "Book cover"/>
-            //     <br/>
-            //     <br/>
-            //     <br/>
-            //     </div>
           ))}
         </div>
       )}

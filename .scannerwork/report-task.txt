@@ -2,5 +2,5 @@ projectKey=abctest123
 serverUrl=http://localhost:9000
 serverVersion=7.1.0.11001
 dashboardUrl=http://localhost:9000/dashboard/index/abctest123
-ceTaskId=AXuWOuzFRfbUDs06TLeZ
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AXuWOuzFRfbUDs06TLeZ
+ceTaskId=AXul7RHGntUM5GJtzerC
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AXul7RHGntUM5GJtzerC

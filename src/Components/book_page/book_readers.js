@@ -1,9 +1,6 @@
 import React from "react";
 import "../../css/book-info.css";
-import StarRatings from "react-star-ratings";
-import { Link } from "react-router-dom";
 import BookReader from "./book_reader_user";
-// import profile_image from "../../Assets/profile.jpeg";
 
 const BookReaders = (props) => {
 

@@ -1,7 +1,6 @@
 """Serializer for user"""
 from rest_framework import serializers
 from .models import *
-# from .helpers import send_otp_to_mobile
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -14,12 +13,9 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create(email=validated_data['email'],
                                    phone=validated_data["phone"],
-                                #    first_name=validated_data["first_name"],
-                                #    last_name=validated_data["last_name"]
                                    )
         user.set_password(validated_data['password'])
         user.save()
-        # send_otp_to_mobile(user.phone, user)
         return user
 
     def update(self, user, validated_data):

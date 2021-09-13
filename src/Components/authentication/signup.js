@@ -16,55 +16,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@material-ui/core";
-import { signup } from "../../services/auth";
 import UserPool from "../../services/UserPool";
 
 const Signup = () => {
-  // const paperStyle = {
-  //   padding: "30px 20px",
-  //   height: "580px",
-  //   width: 290,
-  //   margin: "0px auto",
-  // };
+
   const avatarStyle = { backgroundColor: "green" };
-  //   const marginTop = { marginTop: 15 };
 
   let history = useHistory();
-
-  //
-  // function App() {
-  //   const [email, setEmail ] = useState('');
-  //   const [password, setPassword ] = useState('')
-
-  //   const poolData = {
-  //     UserPoolId: 'ap-south-1_SHAVBsp2a',
-  //     ClientId: 'e6ub2h7rhhpor79kjtqdssl82'
-  //   };
-
-  //   const UserPool = new CognitoUserPool(poolData)
-
-  //   const onSubmit = event => {
-  //     event.preventDefault();
-  //     UserPool.signUp(email,password,[],null,(err, data) => {
-
-  //     })
-  //   }
-
-  //   return (
-  //     <div>
-  //       <form onSubmit = {onSubmit}>
-  //         <input value={email}
-  //         onChange = {event => setEmail(event.target.value)}
-  //         />
-  //         <input value = {password}
-  //         onChange = {event => setPassword(event.target.value)} />
-
-  //       <button type = 'submit'>Signup</button>
-  //       </form>
-  //     </div>
-  //   )
-  // }
-  //
 
   const initialValues = {
     firstName: "",
@@ -117,31 +75,6 @@ const Signup = () => {
         }
       }
     );
-    // const payload = {
-    //   email: values["email"],
-    //   password: values["password"],
-    //   phone: values["phoneNumber"],
-    //   first_name: values["firstName"],
-    //   last_name: values["lastName"],
-    // };
-    // console.log(payload);
-    // signup(payload)
-    //   .then((res) => {
-    //     console.log(res);
-    //     props.resetForm();
-    //     props.setSubmitting(false);
-    // history.push("/verify_email_otp/", {email: values["email"]});
-    //   })
-    //   .catch((err) => {
-    //     console.log(err.response.data);
-    //     if ("email" in err.response.data["errors"]) {
-    //       props.setFieldError("email", "email is already used");
-    //     }
-    //     if ("phone" in err.response.data["errors"]) {
-    //       props.setFieldError("phoneNumber", "phone number is already used");
-    //     }
-
-    //   });
   };
 
   return (
@@ -189,14 +122,6 @@ const Signup = () => {
                 label="Email"
                 placeholder="Enter your email"
               />
-              {/* <FormControl component="fieldset" style={marginTop}>
-                        <FormLabel component="legend">Gender</FormLabel>
-                        <RadioGroup aria-label="gender" name="gender1" style={{ display: "initial" }}>
-                            <FormControlLabel value="female" control={<Radio />} label="Female" />
-                            <FormControlLabel value="male" control={<Radio />} label="Male" />
-                            <FormControlLabel value="other" control={<Radio />} label="Other" />
-                        </RadioGroup>
-                    </FormControl> */}
               <Field
                 as={TextField}
                 name="phoneNumber"

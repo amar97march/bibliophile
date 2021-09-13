@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
-import {Form, Col, Button, Modal} from 'react-bootstrap';
+import {Button, Modal} from 'react-bootstrap';
 import "bootstrap/dist/css/bootstrap.css";
 
 
@@ -13,7 +13,7 @@ export function ImageCrop(props) {
   const [cropper, setCropper] = useState();
   const onChange = (e) => {
     e.preventDefault();
-    let files;
+    var files = [];
     if (e.dataTransfer) {
       files = e.dataTransfer.files;
     } else if (e.target) {
@@ -23,7 +23,9 @@ export function ImageCrop(props) {
     reader.onload = () => {
       setImage(reader.result);
     };
+    if (files.length > 0){
     reader.readAsDataURL(files[0]);
+    }
   };
 
   const getCropData = () => {

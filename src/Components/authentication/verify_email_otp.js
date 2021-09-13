@@ -13,7 +13,6 @@ import AddCircleOutlinedIcon from "@material-ui/icons/AddCircleOutlineOutlined";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import verified_pic from "../../Assets/verified.png";
-import { verifyAccountOtp, resendOtpCall } from "../../services/auth";
 import { useHistory } from "react-router-dom";
 import UserPool from "../../services/UserPool";
 import { CognitoUser } from "amazon-cognito-identity-js";
@@ -22,12 +21,7 @@ const VerifyEmailOtp = () => {
   const location = useLocation();
   const [isVerified, setIsVerfied] = useState(false)
   let history = useHistory();
-  // const paperStyle = {
-  //   padding: "30px 20px",
-  //   height: "580px",
-  //   width: 290,
-  //   margin: "0px auto",
-  // };
+
   const avatarStyle = { backgroundColor: "green" };
   const marginTop = { marginTop: 50 };
 
@@ -43,10 +37,6 @@ const VerifyEmailOtp = () => {
   });
 
   const onSubmit = (values, props) => {
-    // const payload = {
-    //   email: location.state.email,
-    //   otp: values["otp"],
-    // };
     
     var userData = {
       Username: location.state.email,
@@ -56,7 +46,7 @@ const VerifyEmailOtp = () => {
     var cognitoUser = new CognitoUser(userData);
     cognitoUser.confirmRegistration(values["otp"], true, function(err, result) {
       if (err) {
-        alert(err.message || JSON.stringify(err));
+        console.log(err.message || JSON.stringify(err));
         props.setFieldError("otp", "Otp is invalid");
         props.setSubmitting(false);
         return;
@@ -86,21 +76,9 @@ const VerifyEmailOtp = () => {
         return;
       }
       
-        alert("Otp Resend")
+      console.log("Otp Resend")
 
     })
-    // const payload = {
-    //   email: location.state.email
-    // };
-    // console.log(payload);
-    // resendOtpCall(payload)
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("Otp send successfully");
-    //   })
-    //   .catch((err) => {
-    //       alert(err.response.data.error);
-    //   });
   };
 
   return (
