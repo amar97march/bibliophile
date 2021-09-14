@@ -10,6 +10,41 @@ import { useHistory } from "react-router-dom";
 import UserPool from "../../services/UserPool";
 import { AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 
+// Amplify
+import Amplify, { Auth } from "aws-amplify";
+
+Amplify.configure({
+    Auth: {
+
+        // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
+        identityPoolId: 'ap-south-1:4d14d242-8d0d-4e7d-a0d7-01c8aa06e1e2',
+        
+        // REQUIRED - Amazon Cognito Region
+        region: 'ap-south-1',
+
+        // OPTIONAL - Amazon Cognito Federated Identity Pool Region 
+        // Required only if it's different from Amazon Cognito Region
+        identityPoolRegion: 'ap-south-1',
+
+        // OPTIONAL - Amazon Cognito User Pool ID
+        userPoolId: 'ap-south-1_ptnCibf5o',
+
+        // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
+        userPoolWebClientId: '5j60eqnq7b8v9g6op088qccmdm',
+
+        oauth: {
+            domain: 'bibliophile-react-django.auth.ap-south-1.amazoncognito.com',
+            scope: ['email', 'profile', 'openid'],
+            redirectSignIn: 'https://bibliophile-react-django.herokuapp.com/home',
+            redirectSignOut: 'https://bibliophile-react-django.herokuapp.com',
+            responseType: 'token' // or 'token', note that REFRESH token will only be generated when the responseType is code
+        }
+    }
+});
+
+// You can get the current config object
+const currentConfig = Auth.configure();
+
 const Login = ({ handleChange }) => {
     let history = useHistory();
     // const paperStyle = { padding: "30px 20px", height: '580px', width: 290, margin: '0px auto' }
@@ -25,41 +60,6 @@ const Login = ({ handleChange }) => {
         password: Yup.string().required("Required")
     })
 
-
-    const get_userData = async (user)=>{
-        await user.getUserData(function(err, userData) {
-            if (err) {
-                console.log(err.message || JSON.stringify(err));
-                return;
-            }
-            var data = {}
-            console.log('User data for user ' + userData["UserAttributes"]);
-            userData["UserAttributes"].forEach(function (arrayItem){
-                data[arrayItem["Name"]] = arrayItem["Value"]
-            })
-
-            const formValues = {
-                first_name: data["given_name"],
-                last_name: data["family_name"],
-                phone: data["phone_number"],
-                email: data["email"],
-                // description: "",
-            }
-            
-            updateProfileData(formValues)
-            .then((res) => {
-                console.log(res);
-            })
-            .catch((err) => {
-                
-            });
-
-        },
-        { bypassCache: true })
-            
-        
-
-    }
 
     const onSubmit = async (values, props) => {
         const user = new CognitoUser({
@@ -78,7 +78,7 @@ const Login = ({ handleChange }) => {
                 saveTokenToLocalstorage(data["accessToken"]["jwtToken"]);
                 props.resetForm()
                 props.setSubmitting(false)
-                get_userData(user)
+                // get_userData(user)
                 
                 history.push("/home/");
             },
@@ -147,9 +147,21 @@ const Login = ({ handleChange }) => {
                         </Form>
                     )}
                 </Formik>
-
+                <div>
+        <button className = "loginBtn loginBtn--facebook" onClick = {() => {
+          Auth.federatedSignIn({provider: 'Facebook'})
+        }}>
+            Facebook
+        </button >
+        <button class="loginBtn loginBtn--google" onClick = {() => {
+          Auth.federatedSignIn({provider: 'Google'})
+        }}>
+  Google
+</button>
+      </div>
 
             </Paper>
+            
         </Grid>
     )
 }

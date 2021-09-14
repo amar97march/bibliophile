@@ -1,4 +1,18 @@
 import Axios from "axios";
+import Amplify, { Auth } from "aws-amplify";
+
+
+
+export const getToken = () => {
+
+
+Auth.currentSession().then(res=>{
+  let accessToken = res.getAccessToken()
+  let jwt = accessToken.getJwtToken()
+  saveTokenToLocalstorage(jwt)
+}).catch(err => {
+})
+}
 
 
 const baseUrl = "https://bibliophile-react-django.herokuapp.com"

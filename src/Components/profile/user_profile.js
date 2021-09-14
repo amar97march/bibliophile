@@ -17,7 +17,7 @@ import UserPool from "../../services/UserPool";
 const defaultValues = {
   first_name: "",
   last_name: "",
-  phone: 0,
+  phone: "",
   email: "",
   description: "",
 };

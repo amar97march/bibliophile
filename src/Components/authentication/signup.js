@@ -17,6 +17,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { FormHelperText } from "@material-ui/core";
 import UserPool from "../../services/UserPool";
+import Amplify, { Auth } from "aws-amplify";
+
+
+
 
 const Signup = () => {
 
@@ -53,28 +57,23 @@ const Signup = () => {
     ),
   });
 
-  const onSubmit = (values, props) => {
-    UserPool.signUp(
-      values["email"],
-      values["password"],
-      [
-        { Name: "given_name", Value: values["firstName"] },
-        { Name: "family_name", Value: values["lastName"] },
-        { Name: "phone_number", Value: values["phoneNumber"] },
-      ],
-      null,
-      (err, data) => {
-        props.setSubmitting(false);
-        console.log(err, data);
-        if (err !== null) {
-          if ("message" in err) {
-            props.setFieldError("email", err["message"]);
+  const onSubmit = async (values, props) => {
+    try {
+      const { user } = await Auth.signUp({
+          username: values["email"],
+          password: values["password"],
+          attributes: {
+              email: values["email"],  
+              given_name: values["firstName"],
+              family_name: values["lastName"],
+              phone_number: values["phoneNumber"]
           }
-        } else {
-          history.push("/verify_email_otp/", { email: values["email"] });
-        }
-      }
-    );
+      });
+      console.log(user);
+      history.push("/verify_email_otp/", { email: values["email"] });
+  } catch (error) {
+      props.setFieldError("email", error["message"]);
+  }
   };
 
   return (
@@ -169,6 +168,7 @@ const Signup = () => {
           )}
         </Formik>
       </Paper>
+      
     </Grid>
   );
 };

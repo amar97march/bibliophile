@@ -22,6 +22,9 @@ import ProfileBook from "../profile/profile_book";
 import UserPool from "../../services/UserPool";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
+import Amplify, { Auth } from "aws-amplify";
+import { getToken } from "../../services/auth";
+import { get_userData } from "../../services/utilities";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -147,10 +150,16 @@ export default function Home() {
     localStorage.removeItem("bibliophile_token");
     var cognitoUser = UserPool.getCurrentUser();
     cognitoUser.signOut();
+    Auth.signOut()
     history.push("/");
   }
 
   const fetchItems = () => {
+    
+    getToken()
+    get_userData()
+    
+
     getHomePageData()
       .then((res) => {
         console.log(res);
