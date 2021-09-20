@@ -38,6 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+BASE_REDIS_URL = os.environ.get('REDIS_URL', 'redis://localhost:6379')
 
 # Application definition
 
@@ -142,7 +143,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_POST = 587
 EMAIL_HOST_USER = 'amar97march1@gmail.com'
-EMAIL_HOST_PASSWORD = 'P@ssw0rd123#'
+EMAIL_HOST_PASSWORD = 'P@ssw0rd321#'
 
 
 COGNITO_AWS_REGION = 'ap-south-1'
@@ -162,13 +163,15 @@ if COGNITO_AWS_REGION and COGNITO_USER_POOL:
     jwks = json.loads(request.urlopen(pool_jwks_url).read())
     rsa_keys = {key['kid']: json.dumps(key) for key in jwks['keys']}
 
-
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379/1",
+        "LOCATION": 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600',
         "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient"
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": None
+            },
         }
     }
 }
@@ -261,3 +264,9 @@ CSRF_COOKIE_SECURE = False
 
 
 DEFAULT_FILE_STORAGE = 'bibliophile.storage_backends.MediaStorage'  # <-- here is where we reference it
+# Celery
+# CELERY_BROKER_URL = 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600'
+# CELERY_RESULT_BACKEND = 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600'
+
+# CELERY_ACCEPT_CONTENT = ['json']
+# CELERY_TASK_SERIALIZER = 'json'

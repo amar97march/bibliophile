@@ -4,8 +4,8 @@ from .models import *
 import requests
 from rest_framework.views import APIView
 import logging
-from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .tasks import send_email_notification
 from .helpers import get_book_data
 
 
@@ -73,7 +73,6 @@ class BookWishlist(APIView):
         user = request.user
         data = request.data
         try:
-
             book_obj = Book.objects.filter(unique_book_id=data.get("book_id")).first()
             if not book_obj:
                 return Response({"status": 404, "error": "Book not found"})
@@ -140,8 +139,10 @@ class BookShelflist(APIView):
             else:
                 shelflist_obj = Shelflist.objects.create(book=book_obj, user=user, status=True)
             if bool(data.get("status")):
+                send_email_notification.delay(user.email, f"Book {book_obj.title} added to shelf")
                 return Response({"status": True, "message": "Book added to shelflist"})
             else:
+                send_email_notification.delay(user.email, f"Book {book_obj.title} removed from shelf")
                 return Response({"status": False, "message": "Book removed from shelflist"})
         except Exception as e:
             logging.error(e)
