@@ -166,12 +166,9 @@ if COGNITO_AWS_REGION and COGNITO_USER_POOL:
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600',
+        "LOCATION": os.environ.get('REDIS_URL'),
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {
-                "ssl_cert_reqs": None
-            },
         }
     }
 }
@@ -265,8 +262,8 @@ CSRF_COOKIE_SECURE = False
 
 DEFAULT_FILE_STORAGE = 'bibliophile.storage_backends.MediaStorage'  # <-- here is where we reference it
 # Celery
-# CELERY_BROKER_URL = 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600'
-# CELERY_RESULT_BACKEND = 'redis://:pef20b2240cf97984972dd6ff026660034a77765d1beeeb0ece3e0b49edb7823d@ec2-3-94-75-28.compute-1.amazonaws.com:27600'
+CELERY_BROKER_URL = 'redis://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
+CELERY_RESULT_BACKEND = 'redis://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
 
-# CELERY_ACCEPT_CONTENT = ['json']
-# CELERY_TASK_SERIALIZER = 'json'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
