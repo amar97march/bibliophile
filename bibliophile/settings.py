@@ -262,8 +262,9 @@ CSRF_COOKIE_SECURE = False
 
 DEFAULT_FILE_STORAGE = 'bibliophile.storage_backends.MediaStorage'  # <-- here is where we reference it
 # Celery
-CELERY_BROKER_URL = 'redis://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
-CELERY_RESULT_BACKEND = 'redis://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
+CELERY_BROKER_URL = 'rediss://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
+BROKER_URL = 'rediss://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
+CELERY_RESULT_BACKEND = 'rediss://:p396d3e73bc1116d7d7298f44c1b5bf2ebccc3ddaa0559d49743dc4ad7d6545ee@ec2-44-195-137-100.compute-1.amazonaws.com:18660'
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
